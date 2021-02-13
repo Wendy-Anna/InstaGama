@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\InstaGama",
+    "\\InstaGama\\InstaGama",
+    "\\InstaGama\\InstaGama\\src",
+    "\\InstaGama\\InstaGama\\src\\Modules",
+    "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain",
+    "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain\\Entities",
+    "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain\\obj"
+  ],
+  "SelectedNode": "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain\\Entities\\Genero.cs",
+  "PreviewInSolutionExplorer": false
+}

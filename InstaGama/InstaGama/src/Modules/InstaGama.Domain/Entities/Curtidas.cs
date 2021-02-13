@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InstaGama.Domain.Entities
 {
-    class Curtidas
+   public class Curtidas
     {
 
 		public Curtidas(int postagemId,

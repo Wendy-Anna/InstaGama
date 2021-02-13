@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Modules",
+    "\\src\\Modules\\InstaGama.Domain",
+    "\\src\\Modules\\InstaGama.Domain\\Entities"
+  ],
+  "SelectedNode": "\\src\\Modules\\InstaGama.Domain\\Entities\\Comentario.cs",
+  "PreviewInSolutionExplorer": false
+}

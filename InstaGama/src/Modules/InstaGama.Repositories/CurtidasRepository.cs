@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InstaGama.Repositories
 {
-    class CurtidasRepository : ICurtidasRepository
+    public class CurtidasRepository : ICurtidasRepository
     {
         private readonly IConfiguration _configuration;
 

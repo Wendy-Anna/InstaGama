@@ -1,0 +1,4 @@
+C:\Users\karol\OneDrive\Documentos\projeto\InstaGama\InstaGama\src\Modules\InstaGama.Repositories\bin\Debug\netcoreapp3.1\InstaGama.Domain.dll
+C:\Users\karol\OneDrive\Documentos\projeto\InstaGama\InstaGama\src\Modules\InstaGama.Repositories\obj\Debug\netcoreapp3.1\InstaGama.Repositories.csprojAssemblyReference.cache
+C:\Users\karol\OneDrive\Documentos\projeto\InstaGama\InstaGama\src\Modules\InstaGama.Repositories\obj\Debug\netcoreapp3.1\InstaGama.Repositories.AssemblyInfoInputs.cache
+C:\Users\karol\OneDrive\Documentos\projeto\InstaGama\InstaGama\src\Modules\InstaGama.Repositories\obj\Debug\netcoreapp3.1\InstaGama.Repositories.AssemblyInfo.cs

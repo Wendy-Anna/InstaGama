@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\REMAKKER\\Documents\\pariticular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj": {}
+    "C:\\Users\\REMAKKER\\Documents\\particular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj": {}
   },
   "projects": {
-    "C:\\Users\\REMAKKER\\Documents\\pariticular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj": {
+    "C:\\Users\\REMAKKER\\Documents\\particular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\REMAKKER\\Documents\\pariticular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj",
+        "projectUniqueName": "C:\\Users\\REMAKKER\\Documents\\particular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj",
         "projectName": "InstaGama.Repositories",
-        "projectPath": "C:\\Users\\REMAKKER\\Documents\\pariticular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj",
+        "projectPath": "C:\\Users\\REMAKKER\\Documents\\particular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj",
         "packagesPath": "C:\\Users\\REMAKKER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\REMAKKER\\Documents\\pariticular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\obj\\",
+        "outputPath": "C:\\Users\\REMAKKER\\Documents\\particular\\gamaAcademy\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\REMAKKER\\AppData\\Roaming\\NuGet\\NuGet.Config",

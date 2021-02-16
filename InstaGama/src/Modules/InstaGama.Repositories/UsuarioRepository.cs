@@ -11,12 +11,20 @@ namespace InstaGama.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
        
+<<<<<<< HEAD
         public Task<Usuario> GetById(int id)
+=======
+        public Task<Usuario> PegarId(int id)
+>>>>>>> eff0343d402b427483f22b965d13a5b62e509ad3
         {
             throw new NotImplementedException();
         }
 
+<<<<<<< HEAD
         public Task<Usuario> GetByLoginAsync(string login)
+=======
+        public Task<Usuario> PegarLoginAsync(string login)
+>>>>>>> eff0343d402b427483f22b965d13a5b62e509ad3
         {
             throw new NotImplementedException();
         }

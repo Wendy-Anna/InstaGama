@@ -11,8 +11,8 @@ namespace InstaGama.Domain.Interfaces
     {
         Task<int> InserirAsync(Usuario  usuario);
 
-        Task<Usuario> GetByLoginAsync(string login);
+        Task<Usuario> PegarLoginAsync(string login);
 
-        Task<Usuario> GetById(int id);
+        Task<Usuario> PegarId(int id);
     }
 }

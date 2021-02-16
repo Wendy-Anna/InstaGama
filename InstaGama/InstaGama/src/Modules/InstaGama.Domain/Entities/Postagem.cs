@@ -4,17 +4,19 @@ using System.Text;
 
 namespace InstaGama.Domain.Entities
 {
-    class Postagem
+    public class Postagem
     {
             public Postagem(
-                //Usuario usuarioId,
+                Usuario usuarioId,
                 string texto,
-                string media,
+                string foto,
+                string video,
                 DateTime dataCriacao)
             {
-                //UsuarioId = usuarioId
+                UsuarioId = usuarioId;
                 Texto = texto;
-                Media = media;
+                Foto = foto;
+                Video = video;
                 DataCriacao = dataCriacao;
             }
 
@@ -24,10 +26,11 @@ namespace InstaGama.Domain.Entities
 
             public string Texto { get; private set; }
 
-            public string Media { get; private set; }
+            public string Foto { get; private set; }
 
-            public DateTime DataCriacao { get; private set; }
+            public string Video { get; private set; }
 
+        public DateTime DataCriacao { get; private set; }
 
             public bool isvalid()
             {

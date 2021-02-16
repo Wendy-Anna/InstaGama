@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\InstaGama",
+    "\\InstaGama\\InstaGama",
+    "\\InstaGama\\InstaGama\\src",
+    "\\InstaGama\\InstaGama\\src\\Modules",
+    "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain",
+    "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain\\Entities"
+  ],
+  "SelectedNode": "\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Domain\\Entities\\Postagem.cs",
+  "PreviewInSolutionExplorer": false
+}

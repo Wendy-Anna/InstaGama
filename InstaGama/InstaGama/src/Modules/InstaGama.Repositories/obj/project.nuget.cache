@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "14z8NMjNVl81MfHUMj2/XdoRpaD4jcyOpLRhCOxiAQzgNYGqAIQqf/AIWFl5WUEx9PjSei30Ah7QYvKSB5j/MA==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\willian\\Desktop\\Projeto-final\\InstaGama\\InstaGama\\InstaGama\\src\\Modules\\InstaGama.Repositories\\InstaGama.Repositories.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\willian\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\willian\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "O projeto InstaGama.Domain não é compatível com netstandard2.0 (.NETStandard,Version=v2.0). O projeto InstaGama.Domain dá suporte a: netcoreapp3.1 (.NETCoreApp,Version=v3.1)",
+      "libraryId": "InstaGama.Domain",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.0"
+      ]
+    }
+  ]
+}

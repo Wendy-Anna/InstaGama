@@ -1,7 +1,4 @@
-﻿using System;
-using InstaGama.Domain.Entities;
-using System.Collections.Generic;
-using System.Text;
+﻿using InstaGama.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace InstaGama.Domain.Interfaces
@@ -9,8 +6,8 @@ namespace InstaGama.Domain.Interfaces
     public interface ICurtidasRepository
     {
         Task<int> InserirAsync(Curtidas curtidas);
-        Task DeletarAsync(int id);
-        Task<int> PegarQuantidadeCurtidasIdAsync(int postageId);
-        Task<Curtidas> PegarUsuarioIdEPostagemIdAsync(int userId, int postageId);
+        Task ApagarAsync(int id);
+        Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId);
+        Task<Curtidas> PegarUsuarioIdEPostagemIdAsync(int usuario, int postagemId);
     }
 }

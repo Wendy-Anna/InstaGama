@@ -1,10 +1,15 @@
+using InstaGama.Repositories.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InstaGama.Api
 {
@@ -21,7 +26,7 @@ namespace InstaGama.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            RegisterService(services);
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +47,7 @@ namespace InstaGama.Api
             });
         }
 
-        void RegisterService(IServiceCollection services)
+        void RegisterServices(IServiceCollection services)
         {
             new RootBootstrapper().RootRegisterServices(services);
         }

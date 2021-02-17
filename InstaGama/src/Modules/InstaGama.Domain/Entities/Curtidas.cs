@@ -27,4 +27,3 @@ namespace InstaGama.Domain.Entities
         public int UsuarioId { get; private set; }
     }
 }
-}

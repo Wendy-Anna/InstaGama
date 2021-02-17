@@ -4,26 +4,66 @@ using System;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-
+using Microsoft.Extensions.Configuration;
 
 namespace InstaGama.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-       
+        private readonly IConfiguration _configuration;
+
+        public UsuarioRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public Task<Usuario> PegarId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Usuario> PegarLoginAsync(string login)
+        public async Task<Usuario> PegarLoginAsync(string login)
         {
-            throw new NotImplementedException();
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT u.Id, u.Nome, u.Email, u.Senha, g.Id as GeneroId, g.Descricao
+                                    FROM Usuario U
+                                    INNER JOIN Genero g ON g.Id = u.GeneroId
+                                    WHERE u.Email= '{login}'";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    var reader = await cmd
+                                           .ExecuteReaderAsync()
+                                           .ConfigureAwait(false);
+
+                    while (reader.Read())
+                    {
+                        var usuario = new Usuario(reader["Nome"].ToString(),
+                                                        reader["Email"].ToString(),
+                                                        reader["Senha"].ToString(),
+                                            DateTime.Parse(reader["DataNascimento"].ToString()),
+                                            new Genero(reader["Descricao"].ToString()),
+                                            reader["Foto"].ToString());
+
+                        usuario.SetId(int.Parse(reader["id"].ToString()));
+                        usuario.Genero.SetId(int.Parse(reader["GeneroId"].ToString())); 
+
+                        return usuario;
+                    }
+
+                    return default;
+                }
+            } 
+        
         }
 
         public async Task<int>  InserirAsync(Usuario usuario)
         {
-            using(var con = new SqlConnection(""))
+            using(var con = new SqlConnection(_configuration["ConnectionString"]))
             {
                 var sqlCmd = @"INSERT INTO
                                   Usuario (GeneroId, Nome, Senha, DataNascimento, Foto)

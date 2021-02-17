@@ -53,5 +53,6 @@ namespace InstaGama.Api.Controllers
 
             return Ok(usuario);
         } 
+
     } 
 }

@@ -64,6 +64,7 @@ namespace InstaGama.Repositories
             }
         }
 
+
         public async Task<Usuario> PegarLoginAsync(string login)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))

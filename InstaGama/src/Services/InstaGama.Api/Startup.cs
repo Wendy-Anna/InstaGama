@@ -44,7 +44,6 @@ namespace InstaGama.Api
                     });
             });
 
-
             RegisterServices(services);
         }
 

@@ -31,6 +31,7 @@ namespace InstaGama.Repositories
                                     FROM Genero 
                                     WHERE Id= {id}";
 
+
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
                     cmd.CommandType = CommandType.Text;

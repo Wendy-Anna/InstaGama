@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace InstaGama.Domain.Interfaces
 {
-    public interface IComentarioRepository
+    public interface IComentariosRepository
     {
 
-        Task<int> InsertAsync(Comentario comentario);
-        Task<List<Comentario>> GetByPostagemIdAsync(int postagemId);
+        Task<int> InserirAsync(Comentario comentario);
+        Task<List<Comentario>> PegarPostagemIdAsync(int postagemId);
 
     }
 }

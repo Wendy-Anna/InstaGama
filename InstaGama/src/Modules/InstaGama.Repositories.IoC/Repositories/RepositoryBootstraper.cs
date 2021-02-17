@@ -11,6 +11,8 @@ namespace InstaGama.Repositories.IoC.Repositories
     {
         internal void ChildServiceRegister(IServiceCollection services)
         {
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IGeneroRepository, GeneroRepository>();
             services.AddScoped<IAmigoRepository, AmigoRepository>();
         }
     }

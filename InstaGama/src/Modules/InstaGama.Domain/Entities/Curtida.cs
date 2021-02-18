@@ -4,16 +4,16 @@ using System.Text;
 
 namespace InstaGama.Domain.Entities
 {
-    public class Curtidas
+    public class Curtida
     {
-        public Curtidas(int postagemId,
+        public Curtida(int postagemId,
                         int usuarioId)
         {
             PostagemId = postagemId;
             UsuarioId = usuarioId;
         }
 
-        public Curtidas(int id,
+        public Curtida(int id,
                         int postagemId,
                         int usuarioId)
         {

@@ -14,7 +14,7 @@ namespace InstaGama.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> InserirAsync(Curtidas curtidas)
+        public Task<int> InserirAsync(Curtida curtidas)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +24,7 @@ namespace InstaGama.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Curtidas> PegarUsuarioIdEPostagemIdAsync(int usuarioId, int postagemId)
+        public Task<Curtida> PegarUsuarioIdEPostagemIdAsync(int usuarioId, int postagemId)
         {
             throw new NotImplementedException();
         }

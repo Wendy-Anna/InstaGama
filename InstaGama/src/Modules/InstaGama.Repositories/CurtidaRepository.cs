@@ -12,7 +12,7 @@ namespace InstaGama.Repositories
     public class CurtidaRepository : ICurtidaRepository
     {
 
-                public Task ApagarAsync(int id)
+        public Task ApagarAsync(int id)
         {
             throw new NotImplementedException();
         }

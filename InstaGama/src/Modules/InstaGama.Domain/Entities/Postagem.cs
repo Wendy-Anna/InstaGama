@@ -12,24 +12,24 @@ namespace InstaGama.Domain.Entities
             Texto = texto;
             UsuarioId = usuarioId;
 
-            Creacao = DateTime.Now;
+            Criacao = DateTime.Now;
         }
 
         public Postagem(int id,
                         string texto,
                         int usuarioId,
-                        DateTime creacao)
+                        DateTime criacao)
         {
             Id = id;
             Texto = texto;
             UsuarioId = usuarioId;
-            Creacao = creacao;
+            Criacao = criacao;
         }
 
         public int Id { get; private set; }
         public int UsuarioId { get; private set; }
         public string Texto { get; private set; }
-        public DateTime Creacao { get; private set; }
+        public DateTime Criacao { get; private set; }
 
         public void SetId(int id)
         {

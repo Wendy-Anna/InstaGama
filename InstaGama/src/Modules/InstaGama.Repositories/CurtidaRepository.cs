@@ -31,5 +31,10 @@ namespace InstaGama.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task PegarUsuarioIdEPostagemIdAsync(object usuarioId, int postagemId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

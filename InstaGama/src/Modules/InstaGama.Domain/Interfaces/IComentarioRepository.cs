@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace InstaGama.Domain.Interfaces
 {
-    public interface IComentariosRepository
+    public interface IComentarioRepository
     {
 
         Task<int> InserirAsync(Comentario comentario);

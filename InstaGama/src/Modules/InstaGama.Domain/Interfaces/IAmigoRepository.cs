@@ -9,7 +9,7 @@ namespace InstaGama.Domain.Interfaces
 {
     public interface IAmigoRepository
     {
-        Task<int> InsertAsync(Amigo inputAmigo);
-        Task<List<Amigo>> GetListaAmigoByUsuarioIdAsync(int usuarioId);
+        Task<int> InserirAsync(Amigo inserirAmigo);
+        Task<List<Amigo>> ObterListaAmigoPorUsuarioIdAsync(int usuarioId);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using InstaGama.Application.AppAmigo.Interfaces;
 using InstaGama.Application.AppAmigos;
+using InstaGama.Application.AppPostagem;
+using InstaGama.Application.AppPostagem.Interfaces;
 using InstaGama.Application.UsuarioApp;
 using InstaGama.Application.UsuarioApp.Interface;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,7 @@ namespace InstaGama.Repositories.IoC.Application
         {
             services.AddScoped<IUsuarioAppService, UsuarioAppService>();
             services.AddScoped<IAmigoAppService, AmigoAppService>();
+            services.AddScoped<IPostagemAppService, PostagemAppService>();
 
         }
     }

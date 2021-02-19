@@ -69,10 +69,20 @@ namespace InstaGama.Repositories
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
-                var sqlCmd = @$"SELECT u.Id, u.Nome, u.Email, u.Senha, g.Id as GeneroId, g.Descricao
-                                    FROM Usuario U
-                                    INNER JOIN Genero g ON g.Id = u.GeneroId
-                                    WHERE u.Email= '{login}'";
+                var sqlCmd = @$"SELECT u.Id,
+	                                 u.Nome,
+	                                 u.Email,
+	                                 u.Senha,
+                                     u.DataNascimento,
+                                     u.Foto,
+	                                 g.Id as GeneroId,
+	                                 g.Descricao
+                                FROM 
+	                                Usuario u
+                                INNER JOIN 
+	                                Genero g ON g.Id = u.GeneroId
+                                WHERE 
+	                                u.Email= '{login}'";
 
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
@@ -80,29 +90,28 @@ namespace InstaGama.Repositories
                     con.Open();
 
                     var reader = await cmd
-                                           .ExecuteReaderAsync()
-                                           .ConfigureAwait(false);
+                                        .ExecuteReaderAsync()
+                                        .ConfigureAwait(false);
 
                     while (reader.Read())
                     {
                         var usuario = new Usuario(reader["Nome"].ToString(),
-                                                        reader["Email"].ToString(),
-                                                        reader["Senha"].ToString(),
                                             DateTime.Parse(reader["DataNascimento"].ToString()),
                                             new Genero(reader["Descricao"].ToString()),
                                             reader["Foto"].ToString());
 
+                        usuario.InformacaoLoginUsuario(reader["Email"].ToString(), reader["Senha"].ToString());
                         usuario.SetId(int.Parse(reader["id"].ToString()));
-                        usuario.Genero.SetId(int.Parse(reader["GeneroId"].ToString())); 
+                        usuario.Genero.SetId(int.Parse(reader["GeneroId"].ToString()));
 
                         return usuario;
                     }
 
                     return default;
                 }
-            } 
-        
+            }
         }
+
 
         public async Task<int>  InserirAsync(Usuario usuario)
         {

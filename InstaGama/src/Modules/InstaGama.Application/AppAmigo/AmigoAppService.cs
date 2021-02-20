@@ -14,22 +14,34 @@ namespace InstaGama.Application.AppAmigos
     {
         //preciso verificar se o id do usuario e do amigo existe? questionar
         //private readonly IUsuarioRepository _usuarioRespository;
-        private readonly IAmigoRepository _amigoRespository;
+        private readonly IAmigoRepository _amigoRepository;
 
-        public AmigoAppService(IUsuarioRepository usuarioRepository,
-             IAmigoRepository amigoRespository)
+        public AmigoAppService(IAmigoRepository amigoRepository)
+            //IUsuarioRepository usuarioRepository)
         {
             //_usuarioRespository = usuarioRepository;
-            _amigoRespository = amigoRespository;
+            _amigoRepository = amigoRepository;
         }
 
         public async Task<List<Amigo>> GetListaAmigoByUsuarioIdAsync(int usuarioId)
         {
-            var amigos = await _amigoRespository
-                              .ObterListaAmigoPorUsuarioIdAsync(usuarioId)
+            List<Amigo> listaAmigos = await _amigoRepository
+                              .ObterListaAmigoPorIdAsync(usuarioId)
                               .ConfigureAwait(false);
 
-            return amigos;
+            foreach (var amigo in listaAmigos)
+            {
+                 new AmigoViewModel()
+                {
+                    Id = amigo.Id,
+                    UsuarioId = amigo.UsuarioId,
+                    UsuarioAmigoId = amigo.UsuarioAmigoId
+
+                };
+            }
+                return listaAmigos; 
+            
+            
         }
 
         public async Task<AmigoViewModel> InsertAsync(AmigoInput inputAmigo)
@@ -39,17 +51,16 @@ namespace InstaGama.Application.AppAmigos
             var amigo = new Amigo(inputAmigo.UsuarioId,
                                   inputAmigo.UsuarioAmigoId);
 
-            //mensagem de retornos
-
-            var id = await _amigoRespository
+           var id = await _amigoRepository
                                 .InserirAsync(amigo)
                                 .ConfigureAwait(false);
 
             return new AmigoViewModel()
             {
+                Id = id,
                 UsuarioId = amigo.UsuarioId,
                 UsuarioAmigoId = amigo.UsuarioAmigoId
-                //incluir o retorno do nome após GetByIdUsuario
+                
             };
         }
     }

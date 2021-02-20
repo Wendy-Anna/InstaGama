@@ -35,5 +35,20 @@ namespace InstaGama.Api.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
+        {
+            var amigo = await _amigoAppService
+                                .GetListaAmigoByUsuarioIdAsync(id)
+                                .ConfigureAwait(false);
+
+            if (amigo is null)
+                return NotFound();
+
+            return Ok(amigo);
+        }
+
     }
 }

@@ -6,7 +6,9 @@ namespace InstaGama.Application.AppAmigo.Output
 {
     public class AmigoViewModel
     {
+        public int Id { get; set; }
         public int UsuarioId { get; set; }
+
         public int UsuarioAmigoId { get; set; }
     }
 }

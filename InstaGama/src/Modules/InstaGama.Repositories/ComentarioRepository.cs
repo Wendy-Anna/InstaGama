@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace InstaGama.Repositories
 {
-    public class ComentarioRepository : IComentariosRepository
+    public class ComentarioRepository : IComentarioRepository
     {
         private readonly IConfiguration _configuracao;
         public ComentarioRepository(IConfiguration configuracao)

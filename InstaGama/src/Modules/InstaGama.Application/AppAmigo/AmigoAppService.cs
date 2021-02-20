@@ -13,53 +13,96 @@ namespace InstaGama.Application.AppAmigos
     public class AmigoAppService : IAmigoAppService
     {
         //preciso verificar se o id do usuario e do amigo existe? questionar
-        //private readonly IUsuarioRepository _usuarioRespository;
+        private readonly IUsuarioRepository _usuarioRespository;
         private readonly IAmigoRepository _amigoRepository;
 
-        public AmigoAppService(IAmigoRepository amigoRepository)
-            //IUsuarioRepository usuarioRepository)
+        public AmigoAppService(IAmigoRepository amigoRepository, 
+            IUsuarioRepository usuarioRepository)
         {
-            //_usuarioRespository = usuarioRepository;
+            _usuarioRespository = usuarioRepository;
             _amigoRepository = amigoRepository;
         }
 
-        public async Task<List<Amigo>> GetListaAmigoByUsuarioIdAsync(int usuarioId)
+        public async Task<List<AmigoViewModel>> GetListaAmigoByUsuarioIdAsync(int usuarioId)
         {
             List<Amigo> listaAmigos = await _amigoRepository
                               .ObterListaAmigoPorIdAsync(usuarioId)
                               .ConfigureAwait(false);
 
+            if (listaAmigos is null)
+            {
+                throw new ArgumentException("Lista de amigos não encontrada!");
+            }
+
+            var listaAmigosMV = new List<AmigoViewModel>();
+           
+
             foreach (var amigo in listaAmigos)
             {
-                 new AmigoViewModel()
+                
+                Usuario usuarioAmigo = await _usuarioRespository
+                                        .PegarId(amigo.UsuarioAmigoId)
+                                        .ConfigureAwait(false);
+                
+                Usuario usuario = await _usuarioRespository
+                                        .PegarId(amigo.UsuarioId)
+                                        .ConfigureAwait(false);
+
+                AmigoViewModel amigosMV = new AmigoViewModel()
                 {
                     Id = amigo.Id,
                     UsuarioId = amigo.UsuarioId,
-                    UsuarioAmigoId = amigo.UsuarioAmigoId
+                    NomeUsuario = usuario.Nome,
+                    UsuarioAmigoId = amigo.UsuarioAmigoId,
+                    NomeUsuarioAmigo = usuarioAmigo.Nome,
 
                 };
+
+                listaAmigosMV.Add(amigosMV);
+
+
             }
-                return listaAmigos; 
-            
-            
+
+            if (listaAmigosMV is null)
+            {
+                throw new ArgumentException("Lista de amigos não encontrada!");
+            }
+        return listaAmigosMV;
+
+
+
         }
 
         public async Task<AmigoViewModel> InsertAsync(AmigoInput inputAmigo)
         {
-            //validar se os usuário existem utilizando a pesquisa por IdUsuario
-
+            
             var amigo = new Amigo(inputAmigo.UsuarioId,
                                   inputAmigo.UsuarioAmigoId);
 
-           var id = await _amigoRepository
+            if (amigo is null)
+            {
+                throw new ArgumentException("Amigo não encontrada!");
+            }
+
+            var id = await _amigoRepository
                                 .InserirAsync(amigo)
                                 .ConfigureAwait(false);
+
+            Usuario usuarioAmigo = await _usuarioRespository
+                                        .PegarId(amigo.UsuarioAmigoId)
+                                        .ConfigureAwait(false);
+
+            Usuario usuario = await _usuarioRespository
+                                    .PegarId(amigo.UsuarioId)
+                                    .ConfigureAwait(false);
 
             return new AmigoViewModel()
             {
                 Id = id,
                 UsuarioId = amigo.UsuarioId,
-                UsuarioAmigoId = amigo.UsuarioAmigoId
+                NomeUsuario = usuario.Nome,
+                UsuarioAmigoId = amigo.UsuarioAmigoId,
+                NomeUsuarioAmigo = usuarioAmigo.Nome,
                 
             };
         }

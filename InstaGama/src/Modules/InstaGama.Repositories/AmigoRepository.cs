@@ -19,7 +19,8 @@ namespace InstaGama.Repositories
             _configuration = configuration;
 
         }
-       
+
+        
         public async Task<int> InserirAsync(Amigo amigo)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
@@ -48,12 +49,11 @@ namespace InstaGama.Repositories
             }
         }
 
-        //retornar uma lista de amigos
+        
         public async Task<List<Amigo>> ObterListaAmigoPorIdAsync(int usuarioId)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
-                //comando de retorno de todos os amigos pelo Id do Usuario principal
                 var sqlCmd = @$"SELECT a.id, a.UsuarioId, a.UsuarioAmigoId 
                                 FROM Amigo a
                                 WHERE a.UsuarioId='{usuarioId}';";
@@ -61,10 +61,10 @@ namespace InstaGama.Repositories
 
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
-                    //Atribuindo os valores para o parametro - preparando para recupear as inf
+                   
                     cmd.CommandType = CommandType.Text;
                     
-                    //executar a operação
+                
                     con.Open();
                     var reader = await cmd
                                     .ExecuteReaderAsync()

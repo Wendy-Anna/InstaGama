@@ -11,6 +11,6 @@ namespace InstaGama.Application.AppAmigo.Interfaces
     public interface IAmigoAppService
     {
         Task<AmigoViewModel> InsertAsync(AmigoInput amigo);
-        Task<List<Amigo>> GetListaAmigoByUsuarioIdAsync(int usuarioId);
+        Task<List<AmigoViewModel>> GetListaAmigoByUsuarioIdAsync(int usuarioId);
     }
 }

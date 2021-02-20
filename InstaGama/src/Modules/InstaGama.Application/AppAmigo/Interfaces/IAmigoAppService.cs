@@ -12,5 +12,7 @@ namespace InstaGama.Application.AppAmigo.Interfaces
     {
         Task<AmigoViewModel> InsertAsync(AmigoInput amigo);
         Task<List<AmigoViewModel>> GetListaAmigoByUsuarioIdAsync(int usuarioId);
+        Task<List<AmigoViewModel>> ObterListaAmigoAsync();
+        Task<int> DeletarVinculoAmizade(int idUsuario, int idVinculo);
     }
 }

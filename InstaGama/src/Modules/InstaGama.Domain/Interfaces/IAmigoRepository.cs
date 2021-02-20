@@ -12,5 +12,9 @@ namespace InstaGama.Domain.Interfaces
         Task<int> InserirAsync(Amigo inserirAmigo);
         Task<List<Amigo>> ObterListaAmigoPorIdAsync(int id);
 
+        Task<List<Amigo>> ObterListaAmigoAsync();
+
+        Task<int> DeletarVinculoAmizade(int idUsuario, int idVinculo);
+
     }
 }

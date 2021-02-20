@@ -20,12 +20,12 @@ namespace InstaGama.Repositories
 
         }
 
-        
+
         public async Task<int> InserirAsync(Amigo amigo)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
-                
+
                 var sqlCmd = @"INSERT INTO
                              AMIGO(UsuarioId, 
                                     UsuarioAmigoId)
@@ -35,7 +35,7 @@ namespace InstaGama.Repositories
 
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
-                     cmd.CommandType = CommandType.Text;
+                    cmd.CommandType = CommandType.Text;
                     cmd.Parameters.AddWithValue("usuarioId", amigo.UsuarioId);
                     cmd.Parameters.AddWithValue("usuarioAmigoId", amigo.UsuarioAmigoId);
 
@@ -49,7 +49,7 @@ namespace InstaGama.Repositories
             }
         }
 
-        
+
         public async Task<List<Amigo>> ObterListaAmigoPorIdAsync(int usuarioId)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
@@ -61,10 +61,10 @@ namespace InstaGama.Repositories
 
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
-                   
+
                     cmd.CommandType = CommandType.Text;
-                    
-                
+
+
                     con.Open();
                     var reader = await cmd
                                     .ExecuteReaderAsync()
@@ -73,7 +73,7 @@ namespace InstaGama.Repositories
 
                     while (reader.Read())
                     {
-                        var amigo = new Amigo(int.Parse(reader["UsuarioId"].ToString()), 
+                        var amigo = new Amigo(int.Parse(reader["UsuarioId"].ToString()),
                                               int.Parse(reader["UsuarioAmigoId"].ToString()),
                                               int.Parse(reader["UsuarioAmigoId"].ToString()));
 
@@ -84,5 +84,70 @@ namespace InstaGama.Repositories
             }
 
         }
+
+        public async Task<List<Amigo>> ObterListaAmigoAsync()
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT a.id, a.UsuarioId, a.UsuarioAmigoId 
+                                FROM Amigo a;";
+
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+
+                    cmd.CommandType = CommandType.Text;
+
+
+                    con.Open();
+                    var reader = await cmd
+                                    .ExecuteReaderAsync()
+                                    .ConfigureAwait(false);
+                    var listaAmigos = new List<Amigo>();
+
+                    while (reader.Read())
+                    {
+                        var amigo = new Amigo(int.Parse(reader["UsuarioId"].ToString()),
+                                              int.Parse(reader["UsuarioAmigoId"].ToString()),
+                                              int.Parse(reader["UsuarioAmigoId"].ToString()));
+
+                        listaAmigos.Add(amigo);
+                    }
+                    return listaAmigos;
+                }
+            }
+
+        }
+
+        public async Task<int> DeletarVinculoAmizade(int idUsuario, int idVinculo)
+        {
+            
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+
+                var sqlCmd = $@"DELETE 
+                               FROM AMIGO
+                               WHERE id ='{idVinculo}'";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("id", idVinculo);
+                    
+
+                    con.Open();
+                    
+                    var ret = await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+
+                    return idUsuario;
+
+
+                    
+
+                }
+
+            }
+        }
     }
 }
+

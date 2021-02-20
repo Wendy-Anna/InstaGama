@@ -12,7 +12,6 @@ namespace InstaGama.Application.AppAmigos
 {
     public class AmigoAppService : IAmigoAppService
     {
-        //preciso verificar se o id do usuario e do amigo existe? questionar
         private readonly IUsuarioRepository _usuarioRespository;
         private readonly IAmigoRepository _amigoRepository;
 
@@ -22,6 +21,8 @@ namespace InstaGama.Application.AppAmigos
             _usuarioRespository = usuarioRepository;
             _amigoRepository = amigoRepository;
         }
+
+        
 
         public async Task<List<AmigoViewModel>> GetListaAmigoByUsuarioIdAsync(int usuarioId)
         {
@@ -68,9 +69,6 @@ namespace InstaGama.Application.AppAmigos
                 throw new ArgumentException("Lista de amigos não encontrada!");
             }
         return listaAmigosMV;
-
-
-
         }
 
         public async Task<AmigoViewModel> InsertAsync(AmigoInput inputAmigo)
@@ -81,7 +79,7 @@ namespace InstaGama.Application.AppAmigos
 
             if (amigo is null)
             {
-                throw new ArgumentException("Amigo não encontrada!");
+                throw new ArgumentException("Amigo não encontrada.");
             }
 
             var id = await _amigoRepository
@@ -105,6 +103,83 @@ namespace InstaGama.Application.AppAmigos
                 NomeUsuarioAmigo = usuarioAmigo.Nome,
                 
             };
+        }
+
+        public async Task<List<AmigoViewModel>> ObterListaAmigoAsync()
+        {
+            List<Amigo> listaAmigos = await _amigoRepository
+                              .ObterListaAmigoAsync()
+                              .ConfigureAwait(false);
+
+            if (listaAmigos is null)
+            {
+                throw new ArgumentException("Lista de amigos não encontrada!");
+            }
+
+            var listaAmigosMV = new List<AmigoViewModel>();
+
+
+            foreach (var amigo in listaAmigos)
+            {
+
+                Usuario usuarioAmigo = await _usuarioRespository
+                                        .PegarId(amigo.UsuarioAmigoId)
+                                        .ConfigureAwait(false);
+
+                Usuario usuario = await _usuarioRespository
+                                        .PegarId(amigo.UsuarioId)
+                                        .ConfigureAwait(false);
+
+                AmigoViewModel amigosMV = new AmigoViewModel()
+                {
+                    Id = amigo.Id,
+                    UsuarioId = amigo.UsuarioId,
+                    NomeUsuario = usuario.Nome,
+                    UsuarioAmigoId = amigo.UsuarioAmigoId,
+                    NomeUsuarioAmigo = usuarioAmigo.Nome,
+
+                };
+
+                listaAmigosMV.Add(amigosMV);
+
+
+            }
+
+            if (listaAmigosMV is null)
+            {
+                throw new ArgumentException("Lista de amigos não encontrada.");
+            }
+            return listaAmigosMV;
+        }
+
+        
+        public async Task<int> DeletarVinculoAmizade(int idUsuario, int idVinculo)
+        {
+            var usuario = await _usuarioRespository
+                                .PegarId(idUsuario)
+                                .ConfigureAwait(false);
+            if (usuario is null)
+            {
+                throw new ArgumentException("Usuário não encontrado.");
+            }
+
+            var amizada = await _amigoRepository
+                                .DeletarVinculoAmizade(idUsuario, idVinculo)
+                                .ConfigureAwait(false);
+
+            if (amizada <= 0)
+            {
+                throw new ArgumentException("Vinculo.");
+            }
+
+            
+                     
+
+            else return amizada;
+
+
+
+
         }
     }
     

@@ -73,6 +73,50 @@ namespace InstaGama.Application.UsuarioApp
             };
         }
 
-        
+        public async Task<UsuarioViewModel> UpdateUsuario(UsuarioInput input, int id)
+        {
+            var usuario = await _usuarioRepository
+                                    .PegarId(id)
+                                    .ConfigureAwait(false);
+
+            if (usuario is null)
+                return default;
+
+            usuario.SetNome(input.Nome);
+            usuario.SetEmail(input.Email);
+
+            await _usuarioRepository
+                .AlterarUsuario(usuario)
+                .ConfigureAwait(false);
+
+            return new UsuarioViewModel()
+            {
+                Id = usuario.Id,
+                Nome = usuario.Nome,
+                DataNascimento = usuario.DataNascimento,
+                Email = usuario.Email,
+                Genero = usuario.Genero,
+                Foto = usuario.Foto
+            };
+
+
+        }
+
+        public async Task DeleteUsuario(int id)
+        {
+            var usuario = await _usuarioRepository
+                                    .PegarId(id)
+                                    .ConfigureAwait(false);
+
+            if (usuario != null)
+            {
+               await  _usuarioRepository
+                        .DeleteUsuario(id)
+                        .ConfigureAwait(false);
+            }
+
+
+                
+        }
     }
 }

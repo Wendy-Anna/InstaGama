@@ -14,9 +14,6 @@ using InstaGama.Application.AppUsuario.Interface;
 using InstaGama.Application.UsuarioApp;
 using InstaGama.Application.UsuarioApp.Interface;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InstaGama.Repositories.IoC.Application
 {

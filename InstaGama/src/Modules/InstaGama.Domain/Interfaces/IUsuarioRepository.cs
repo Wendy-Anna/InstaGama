@@ -14,5 +14,11 @@ namespace InstaGama.Domain.Interfaces
         Task<Usuario> PegarLoginAsync(string login);
 
         Task<Usuario> PegarId(int id);
+
+        Task AlterarUsuario(Usuario usuario);
+
+        Task DeleteUsuario(int id);
+
+
     }
 }

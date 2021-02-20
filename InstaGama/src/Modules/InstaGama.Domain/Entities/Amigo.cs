@@ -11,7 +11,13 @@ namespace InstaGama.Domain.Entities
             UsuarioAmigoId=usuarioAmigoId;
         }
 
-        
+        public Amigo(int usuarioId, int usuarioAmigoId, int id)
+        {
+            UsuarioId = usuarioId;
+            UsuarioAmigoId = usuarioAmigoId;
+            Id = id;
+        }
+
         public int Id { get; private set; }
 	    public int UsuarioId { get; private set; }
 	    public int UsuarioAmigoId { get; private set; }
@@ -22,9 +28,9 @@ namespace InstaGama.Domain.Entities
             Id = id;
         }
 
-        public bool IsValid(int UsuarioAmigoId)
+        public bool IsValid()
         {
-            if (UsuarioAmigoId == null)
+            if (UsuarioAmigoId <= 0 || UsuarioId <= 0)
             {
                 return false;
             }

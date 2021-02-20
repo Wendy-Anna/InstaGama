@@ -22,19 +22,18 @@ namespace InstaGama.Repositories
 
 
         //inserir um vinculo de amigo
-        public async Task<int> InsertAsync(Amigo amigo)
+        public async Task<int> InserirAsync(Amigo amigo)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
                 
                 var sqlCmd = @"INSERT INTO
-                             AMIGOS(UsuarioId, 
+                             AMIGO(UsuarioId, 
                                     UsuarioAmigoId)
                              VALUES(@usuarioId,
                                     @usuarioAmigoId);
                              SELECT scope_identity();";
 
-                //executar o comando no banco
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
                     //Atribuindo os valores para o parametro - preparando para salvar a inf
@@ -54,12 +53,12 @@ namespace InstaGama.Repositories
         }
 
         //retornar uma lista de amigos
-        public async Task<List<Amigo>> GetListaAmigoByUsuarioIdAsync(int usuarioId)
+        public async Task<List<Amigo>> ObterListaAmigoPorUsuarioIdAsync(int usuarioId)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
                 //comando de retorno de todos os amigos pelo Id do Usuario principal
-                var sqlCmd = @$"SELECT a.UsuarioId, a.UsuarioAmigoId 
+                var sqlCmd = @$"SELECT a.id, a.UsuarioId, a.UsuarioAmigoId 
                                 FROM Amigos a
                                 WHERE a.UsuarioId='{usuarioId}';";
 
@@ -79,6 +78,7 @@ namespace InstaGama.Repositories
                     while (reader.Read())
                     {
                         var amigo = new Amigo(int.Parse(reader["UsuarioId"].ToString()), 
+                                              int.Parse(reader["UsuarioAmigoId"].ToString()),
                                               int.Parse(reader["UsuarioAmigoId"].ToString()));
 
                         listaAmigos.Add(amigo);

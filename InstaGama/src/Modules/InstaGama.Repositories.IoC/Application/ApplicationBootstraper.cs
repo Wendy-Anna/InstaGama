@@ -4,6 +4,10 @@ using InstaGama.Application.AppAmigos;
 using InstaGama.Application.AppCurtida.Interface;
 using InstaGama.Application.AppPostage;
 
+using InstaGama.Application.AppPostagem;
+using InstaGama.Application.AppPostagem.Interfaces;
+
+
 using InstaGama.Application.AppUsuario;
 using InstaGama.Application.AppUsuario.Interface;
 
@@ -23,7 +27,11 @@ namespace InstaGama.Repositories.IoC.Application
             services.AddScoped<IUsuarioAppService, UsuarioAppService>();
             services.AddScoped<ILoginAppService, LoginAppService>();
             services.AddScoped<IAmigoAppService, AmigoAppService>();
+
             services.AddScoped<ICurtidaAppService, CurtidaAppService>();
+
+            services.AddScoped<IPostagemAppService, PostagemAppService>();
+
 
         }
     }

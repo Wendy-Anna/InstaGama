@@ -13,20 +13,20 @@ namespace InstaGama.Application.AppAmigos
     public class AmigoAppService : IAmigoAppService
     {
         //preciso verificar se o id do usuario e do amigo existe? questionar
-        private readonly IUsuarioRepository _usuarioRespository;
+        //private readonly IUsuarioRepository _usuarioRespository;
         private readonly IAmigoRepository _amigoRespository;
 
         public AmigoAppService(IUsuarioRepository usuarioRepository,
              IAmigoRepository amigoRespository)
         {
-            _usuarioRespository = usuarioRepository;
+            //_usuarioRespository = usuarioRepository;
             _amigoRespository = amigoRespository;
         }
 
         public async Task<List<Amigo>> GetListaAmigoByUsuarioIdAsync(int usuarioId)
         {
             var amigos = await _amigoRespository
-                              .GetListaAmigoByUsuarioIdAsync(usuarioId)
+                              .ObterListaAmigoPorUsuarioIdAsync(usuarioId)
                               .ConfigureAwait(false);
 
             return amigos;
@@ -42,7 +42,7 @@ namespace InstaGama.Application.AppAmigos
             //mensagem de retornos
 
             var id = await _amigoRespository
-                                .InsertAsync(amigo)
+                                .InserirAsync(amigo)
                                 .ConfigureAwait(false);
 
             return new AmigoViewModel()

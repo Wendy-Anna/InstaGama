@@ -23,7 +23,7 @@ namespace InstaGama.Application.AppPostagem
 
         public async Task<PostagemViewModel> InserirAsync(PostagemInput postagemInput)
         {
-            // validando a existencia do usuário
+            
             Usuario usuarioBanco = await _usuarioRepository.PegarId(postagemInput.UsuarioId);
             if(usuarioBanco is null)
             {
@@ -53,10 +53,44 @@ namespace InstaGama.Application.AppPostagem
 
         }
 
-        public Task<List<PostagemViewModel>> ObterListaPostagemPorUsuarioIdAsync(int usuarioId)
+        public async Task<List<PostagemViewModel>> ObterListaPostagemPorUsuarioIdAsync(int usuarioId)
         {
-            
-            throw new NotImplementedException();
+            Usuario usuarioBanco = await _usuarioRepository.PegarId(usuarioId);
+            if (usuarioBanco is null)
+            {
+                throw new ArgumentException("Usuário inválido");
+            }
+
+            List<Postagem> listaPostagem = await _postagemRepository
+                            .ObterListaPostagemPorUsuarioIdAsync(usuarioId)
+                          .ConfigureAwait(false);
+
+            if (listaPostagem is null)
+            {
+              throw new ArgumentException("Lista de postagens não encontrada!");
+            }
+
+           var listaPostagemMV = new List<PostagemViewModel>();
+
+           foreach (var postagem in listaPostagem)
+           {
+              
+            PostagemViewModel postagemMV = new PostagemViewModel()
+            {
+                Id = postagem.Id,
+                    UsuarioId = usuarioBanco.Id,
+                    NomeUsuario = usuarioBanco.Nome,
+                    Texto = postagem.Texto,
+                    Criacao = postagem.Criacao
+
+                };
+
+                listaPostagemMV.Add(postagemMV);
+            }
+
+            return listaPostagemMV;
+
+
         }
     }
 }

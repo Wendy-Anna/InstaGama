@@ -29,10 +29,52 @@ namespace InstaGama.Api.Controllers
                     .InsertAsync(amigoInput)
                     .ConfigureAwait(false);
                 return Created("", amigo);
-            }catch(ArgumentException ex)
+            } catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message) ;
+                return BadRequest(ex.Message);
             }
+        }
+
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
+        {
+            var amigo = await _amigoAppService
+                                .GetListaAmigoByUsuarioIdAsync(id)
+                                .ConfigureAwait(false);
+
+            if (amigo is null)
+                return NotFound();
+
+            return Ok(amigo);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAmigos()
+        {
+            var amigo = await _amigoAppService
+                                .ObterListaAmigoAsync()
+                                .ConfigureAwait(false);
+
+            if (amigo is null)
+                return NotFound();
+
+            return Ok(amigo);
+        }
+
+        [HttpDelete]
+        [Route("{idUsuario}/{idVinculo}")]
+         public async Task<IActionResult> Delete([FromRoute] int idUsuario, int idVinculo)
+        {
+            var amigo = await _amigoAppService
+                                .DeletarVinculoAmizade(idUsuario, idVinculo)
+                                .ConfigureAwait(false);
+
+            //if (amigo is null) return NotFound();
+
+            return Ok(amigo);
+
         }
 
     }

@@ -1,4 +1,6 @@
-﻿using InstaGama.Application.AppCurtida.Interface;
+﻿using InstaGama.Application.AppCurtida.Input;
+using InstaGama.Application.AppCurtida.Interface;
+using InstaGama.Application.AppCurtida.Output;
 using InstaGama.Domain.Entities;
 using InstaGama.Domain.Interfaces;
 using System.Threading.Tasks;
@@ -21,6 +23,11 @@ namespace InstaGama.Application.AppPostage
             // _logado = logadoRepository;
         }
 
+        public Task<CurtidaModelView> InserirAsync(CurtidaInput curtida)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId)
         {
             return await _curtidaRepository
@@ -28,29 +35,7 @@ namespace InstaGama.Application.AppPostage
                             .ConfigureAwait(false);
         }
 
-        public async Task InserirAsync(int postagemId)
-        {
-            var usuarioId = 1; //_logado.PegarUsuarioLogadoId(); o NUMERO 1 PRECISA SER RETIRADO E DESCPMENTAR O LOGADO
-
-            var curtidaExistForPostagem = await _curtidaRepository
-                                                .PegarUsuarioIdEPostagemIdAsync(usuarioId, postagemId)
-                                                .ConfigureAwait(false);
-            if (curtidaExistForPostagem != null)
-            {
-                await _curtidaRepository
-                         .ApagarAsync(curtidaExistForPostagem.Id)
-                         .ConfigureAwait(false);
-            }
-
-            var curtida = new Curtida(postagemId, usuarioId);
-           
-
-            await _curtidaRepository
-                    .InserirAsync(curtida)
-                    .ConfigureAwait(false);
-        }
-
-
-
+        
+        
     }
 }

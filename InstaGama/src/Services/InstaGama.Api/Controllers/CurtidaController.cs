@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InstaGama.Application.AppCurtida.Input;
 using InstaGama.Application.AppCurtida.Interface;
+using InstaGama.Application.AppCurtida.Output;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +35,53 @@ namespace InstaGama.Api.Controllers
                 return NotFound();
             }
             return Ok(qtdCurtidas);
+
         }
 
+
+        [HttpGet]
+        [Route("{usuarioId}/{postagemId}")]
+        public async Task<IActionResult>PegarUsuarioIdEPostagemIdAsync([FromRoute] int usuarioId, int postagemId)
+        {
+            var curtida = await _curtidaAppService
+                                .PegarUsuarioIdEPostagemIdAsync(usuarioId, postagemId )
+                                .ConfigureAwait(false);
+
+         
+
+            return Ok(curtida);
+
+        }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> ApagarAsync([FromRoute] int id)
+        {
+            await _curtidaAppService
+                                    .ApagarAsync(id)
+                                    .ConfigureAwait(false);
+
+            return NoContent();
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> InserirAsync([FromBody] int postagemId)
+        {
+            try
+            {
+                var curtida = await _curtidaAppService
+                                    .InserirAsync(postagemId)
+                                    .ConfigureAwait(false);
+
+                return Created("", curtida);
+            }
+            catch (ArgumentException arg)
+            {
+                return BadRequest(arg.Message);
+            }
+        }
     }
 }

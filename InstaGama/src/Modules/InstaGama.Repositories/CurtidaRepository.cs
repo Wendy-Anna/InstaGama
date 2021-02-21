@@ -1,40 +1,155 @@
 ﻿using InstaGama.Domain.Entities;
 using InstaGama.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace InstaGama.Repositories
 {
     public class CurtidaRepository : ICurtidaRepository
     {
 
-        public Task ApagarAsync(int id)
+        private readonly IConfiguration _configuration;
+
+        public CurtidaRepository(IConfiguration configuration)
         {
-            throw new NotImplementedException();
+            _configuration = configuration;
+        }
+        public async Task ApagarAsync(int id)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = $@"DELETE 
+                                FROM
+                                Curtida
+                                WHERE 
+                                Id={id}";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    await cmd
+                           .ExecuteScalarAsync()
+                           .ConfigureAwait(false);
+                }
+            }
+        }
+        public async Task<int> InserirAsync(Curtida curtida)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {   
+                
+                var sqlCmd = $@"INSERT INTO 
+                                Curtida(UsuarioId, PostagemId)
+                                VALUES (@usuarioId,@postagemId);
+                                SELECT scope_identity();";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    await cmd
+                           .ExecuteScalarAsync()
+                           .ConfigureAwait(false);
+               
+                }
+
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+
+                    cmd.Parameters.AddWithValue("usuarioId", curtida.UsuarioId);
+                    cmd.Parameters.AddWithValue("postagemId", curtida.PostagemId);
+
+
+
+                    con.Open();
+                    var id = await cmd
+                                    .ExecuteScalarAsync()
+                                    .ConfigureAwait(false);
+
+                    return int.Parse(id.ToString());
+                }
+            }
+
+           
         }
 
-        public Task<int> InserirAsync(Curtida curtida)
+        public async Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId)
         {
-            throw new NotImplementedException();
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT
+                                    COUNT(*) AS Quantidade
+                                FROM 
+	                                Curtida
+                                WHERE 
+	                                PostagemId='{postagemId}';";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    var reader = await cmd
+                                        .ExecuteReaderAsync()
+                                        .ConfigureAwait(false);
+
+                    while (reader.Read())
+                    {
+                        return int.Parse(reader["Quantidade"].ToString());
+                    }
+
+                    return default;
+                }
+            }
         }
 
-        public Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId)
+        public async Task<Curtida> PegarUsuarioIdEPostagemIdAsync(int usuarioId, int postagemId)
         {
-            throw new NotImplementedException();
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT Id,
+	                                   UsuarioId
+                                       PostagemId
+                                FROM 
+	                                Curtida
+                                WHERE 
+	                                UsuarioId= '{usuarioId}'
+                                AND 
+                                    PostagemId= '{postagemId}'";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    var reader = await cmd
+                                        .ExecuteReaderAsync()
+                                        .ConfigureAwait(false);
+
+                    while (reader.Read())
+                    {
+                        var curtida = new Curtida(int.Parse(reader["Id"].ToString()),
+                                                int.Parse(reader["PostagemId"].ToString()),
+                                                int.Parse(reader["UsuarioId"].ToString()));
+
+                        return curtida;
+                    }
+
+                    return default;
+                }
+            }
         }
 
-        public Task<Curtida> PegarUsuarioIdEPostagemIdAsync(int usuarioId, int postagemId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task PegarUsuarioIdEPostagemIdAsync(object usuarioId, int postagemId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
+
+        
 }

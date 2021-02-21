@@ -40,7 +40,7 @@ namespace InstaGama.Repositories
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.Parameters.AddWithValue("texto", postagem.Texto);
                     cmd.Parameters.AddWithValue("usuarioId", postagem.UsuarioId);
-                    cmd.Parameters.AddWithValue("criacao", postagem.Criacao);
+                    cmd.Parameters.AddWithValue("criacao", DateTime.Now);
 
                     con.Open();
 

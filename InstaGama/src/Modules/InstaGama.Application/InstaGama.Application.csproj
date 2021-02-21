@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AppPostagem\Output\**" />
+    <EmbeddedResource Remove="AppPostagem\Output\**" />
+    <None Remove="AppPostagem\Output\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.11" />
   </ItemGroup>

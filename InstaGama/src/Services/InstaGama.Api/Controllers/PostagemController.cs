@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using InstaGama.Application.AppPostagem.Input;
 using InstaGama.Application.AppPostagem.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace InstaGama.Api.Controllers
 {
@@ -14,20 +15,26 @@ namespace InstaGama.Api.Controllers
     public class PostagemController : ControllerBase
     {
         private readonly IPostagemAppService _postagemAppService;
-
-        public PostagemController(IPostagemAppService postagemAppService)
+        private readonly IComentarioAppService _comentarioAppService;
+        private readonly ICurtidaAppService _curtidaAppService;
+        public PostagemController(IPostagemAppService postagemAppService,
+        IComentarioAppService comentarioAppService,
+        ICurtidaAppService curtidaAppService)
         {
             _postagemAppService = postagemAppService;
+            _comentarioAppService = comentarioAppService;
+            _curtidaAppService = curtidaAppService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] PostagemInput amigoInput)
+        public async Task<IActionResult> Post([FromBody] PostagemInput postagemInput)
         {
             try
             {
                 var postagem = await _postagemAppService
-                    .InserirAsync(amigoInput)
+                    .InserirtAsync(postagemInput)
                     .ConfigureAwait(false);
+
                 return Created("", postagem);
             }
             catch (ArgumentException ex)
@@ -38,18 +45,121 @@ namespace InstaGama.Api.Controllers
 
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
+        public async Task<IActionResult> Get()
         {
-            var postagem = await _postagemAppService
-                                .ObterListaPostagemPorUsuarioIdAsync(id)
-                                .ConfigureAwait(false);
+            var postages = await _postagemAppService
+                                    .PegarPostagemUsuarioIdAsync()
+                                    .ConfigureAwait(false);
 
-            if (postagem is null)
-                return NotFound();
+            if (postages is null)
+                return NoContent();
 
-            return Ok(postagem);
+            return Ok(postages);
+        }
+
+        [HttpPost]
+        [Route("{id}/Comentario")]
+        public async Task<IActionResult> PostCommetario([FromRoute] int id, [FromBody] ComentarioInput comentarioInput)
+        {
+            try
+            {
+                var usuario = await _comentarioAppService
+                                    .InserirAsync(id, comentarioInput)
+                                    .ConfigureAwait(false);
+
+                return Created("", usuario);
+            }
+            catch (ArgumentException arg)
+            {
+                return BadRequest(arg.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}/Commentarios")]
+        public async Task<IActionResult> GetCommentarios([FromRoute] int id)
+        {
+            var commentarios = await _comentarioAppService
+                                    .PegarPostagemIdAsync(id)
+                                    .ConfigureAwait(false);
+
+            if (commentarios is null)
+                return NoContent();
+
+            return Ok(commentarios);
+        }
+
+        [HttpPost]
+        [Route("{id}/Curtida")]
+        public async Task<IActionResult> PostCurtida([FromRoute] int id)
+        {
+            try
+            {
+                await _curtidaAppService
+                            .InserirtAsync(id)
+                            .ConfigureAwait(false);
+
+                return Created("", "");
+            }
+            catch (ArgumentException arg)
+            {
+                return BadRequest(arg.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}/Cutidas")]
+        public async Task<IActionResult> GetCurtidas([FromRoute] int id)
+        {
+            try
+            {
+                var curtidas = await _curtidaAppService
+                                        .PegarQuantidadeCurtidasEPostageIdAsync(id)
+                                        .ConfigureAwait(false);
+
+                return Ok(curtidas);
+            }
+            catch (ArgumentException arg)
+            {
+                return BadRequest(arg.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                await _postagemAppService
+                                 .DeleteAsync(id)
+                                 .ConfigureAwait(false);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+        }
+
+        [HttpDelete]
+        [Route("{id}/comentario")]
+        public async Task<IActionResult> DeleteComentario([FromRoute] int id)
+        {
+            try
+            {
+                await _comentarioAppService
+                                 .DeleteAsync(id)
+                                 .ConfigureAwait(false);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+
         }
 
     }
-}
+}   

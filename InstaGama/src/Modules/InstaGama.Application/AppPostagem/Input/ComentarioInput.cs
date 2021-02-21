@@ -4,10 +4,8 @@ using System.Text;
 
 namespace InstaGama.Application.AppPostagem.Input
 {
-    public class PostagemInput
+    public class ComentarioInput
     {
-        public int UsuarioId { get; set; }
         public string Texto { get; set; }
-
     }
 }

@@ -20,7 +20,88 @@ namespace InstaGama.Repositories
 
         }
 
-       
+        public async Task AtualizarAsync(int id, Postagem postagem)
+        {
+            try
+            {
+                using (var con = new SqlConnection(_configuration["ConnectionString"]))
+                {
+                    var sqlCmd = $@"UPDATE Postagem SET Texto = @texto,                                            
+                                       WHERE id = {postagem.Id}";
+
+                    using (var cmd = new SqlCommand(sqlCmd, con))
+                    {
+                        cmd.CommandType = CommandType.Text;
+
+                        cmd.Parameters.AddWithValue("texto", postagem.Texto);
+                        
+                        
+
+                        con.Open();
+                        await cmd
+                                        .ExecuteScalarAsync()
+                                        .ConfigureAwait(false);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = $@"DELETE from Postagem  WHERE id = {id}";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+
+                    con.Open();
+                    await cmd
+                          .ExecuteScalarAsync()
+                          .ConfigureAwait(false);
+                }
+            }
+        }
+
+        public async Task<Postagem> PegarPostagemIdAsync(int postagemId)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT *
+                                FROM 
+	                                Postagem
+                                WHERE 
+	                                Id= '{postagemId}'";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    var reader = await cmd
+                                        .ExecuteReaderAsync()
+                                        .ConfigureAwait(false);
+
+                    while (reader.Read())
+                    {
+                        var postagem = new Postagem(reader["Texto"].ToString(), 
+                                             int.Parse(reader["usuarioId"].ToString())
+                                                    );
+                        return postagem;
+
+                    }
+
+                    return default;
+                }
+            }
+        }
+
         public async Task<int> InserirAsync(Postagem postagem)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
@@ -85,6 +166,42 @@ namespace InstaGama.Repositories
 
             }
         }
+
+        public async Task<List<Postagem>> ObterListaPostagem()
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT p.UsuarioId, p.texto, p.criacao 
+                                   FROM POSTAGEM p ';";
+
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+
+                    cmd.CommandType = CommandType.Text;
+
+                    con.Open();
+                    var reader = await cmd
+                                    .ExecuteReaderAsync()
+                                    .ConfigureAwait(false);
+                    var listaPostagem = new List<Postagem>();
+
+                    while (reader.Read())
+                    {
+                        var postagem = new Postagem(int.Parse(reader["Id"].ToString()),
+                                                     reader["Texto"].ToString(),
+                                                     DateTime.Parse(reader["Criacao"].ToString()),
+                                                     int.Parse(reader["UsuarioId"].ToString()));
+
+
+                        listaPostagem.Add(postagem);
+                    }
+                    return listaPostagem;
+                }
+
+            }
+        }
+
 
     }
 }

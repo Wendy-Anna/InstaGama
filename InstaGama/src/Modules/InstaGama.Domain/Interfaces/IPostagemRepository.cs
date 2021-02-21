@@ -10,5 +10,9 @@ namespace InstaGama.Domain.Interfaces
     {
         Task<int> InserirAsync(Postagem postagem);
         Task<List<Postagem>> ObterListaPostagemPorUsuarioIdAsync(int usuarioId);
+        Task AtualizarAsync(int id, Postagem postagem);
+        Task<Postagem> PegarPostagemIdAsync(int postagemId);
+        Task DeleteAsync(int id);
+        Task<List<Postagem>> ObterListaPostagem();
     }
 }

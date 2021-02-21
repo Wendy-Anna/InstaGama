@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace InstaGama.Application.AppPostagem.Interfaces
 {
-    public interface IPostagemAppService
+    public interface IComentarioAppService
     {
-
-        Task<Postagem> InserirtAsync(PostagemInput input);
-        Task<List<Postagem>> PegarPostagemUsuarioIdAsync();
-        Task<Postagem> AtualizarAsync(int id, PostagemInput postageInput);
+        Task<Comentario> InserirAsync(int postagemId, ComentarioInput input);
+        Task<List<Comentario>> PegarPostagemIdAsync(int postagemId);
         Task DeleteAsync(int id);
-        Task<List<Postagem>> ObterListaPostagem();
-
     }
 }

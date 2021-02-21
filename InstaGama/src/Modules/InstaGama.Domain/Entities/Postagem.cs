@@ -36,5 +36,10 @@ namespace InstaGama.Domain.Entities
             return true;
         }
 
+        public void SetId(int id)
+        {
+            Id = id;
+        }
+
     }
 }

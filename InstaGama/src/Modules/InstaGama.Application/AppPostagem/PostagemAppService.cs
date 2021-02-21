@@ -1,6 +1,7 @@
 ﻿using InstaGama.Application.AppPostagem.Input;
 using InstaGama.Application.AppPostagem.Interfaces;
-using InstaGama.Application.AppPostagem.Output;
+
+using InstaGama.Domain.Core.Interfaces;
 using InstaGama.Domain.Entities;
 using InstaGama.Domain.Interfaces;
 using System;
@@ -12,85 +13,75 @@ namespace InstaGama.Application.AppPostagem
 {
     public class PostagemAppService : IPostagemAppService
     {
-        private readonly IUsuarioRepository _usuarioRepository;
+
+        private readonly ILogado _logado;
         private readonly IPostagemRepository _postagemRepository;
 
-        public PostagemAppService(IUsuarioRepository usuarioRepository, IPostagemRepository postagemRepository)
+        public PostagemAppService(ILogado logado, IPostagemRepository postagemRepository)
         {
-            _usuarioRepository = usuarioRepository;
+            _logado = logado;
             _postagemRepository = postagemRepository;
         }
 
-        public async Task<PostagemViewModel> InserirAsync(PostagemInput postagemInput)
+        public async Task<Postagem> AtualizarAsync(int id, PostagemInput postageInput)
         {
-            
-            Usuario usuarioBanco = await _usuarioRepository.PegarId(postagemInput.UsuarioId);
-            if(usuarioBanco is null)
+            var postagem = await _postagemRepository
+                               .PegarPostagemIdAsync(id)
+                               .ConfigureAwait(false);
+            if (postagem is null)
             {
-                throw new ArgumentException("Usuário inválido");
-            }
-            
-            var postagem = new Postagem(postagemInput.Texto, postagemInput.UsuarioId);
-
-            if (!postagem.IsValid())
-            {
-                throw new ArgumentException("Dados obrigatórios não preenchidos");
+                throw new Exception("Sentimos muito, sua postagem não foi encontrada");
             }
 
-            var idPostagem = await _postagemRepository.
-                                           InserirAsync(postagem)
-                                           .ConfigureAwait(false);
-
-            return new PostagemViewModel()
-            {
-                Id = idPostagem,
-                UsuarioId = usuarioBanco.Id,
-                NomeUsuario = usuarioBanco.Nome,
-                Texto = postagem.Texto,
-                Criacao = postagem.Criacao
-            };
 
 
+            return new Postagem(postagem.Texto, postagem.UsuarioId);
         }
 
-        public async Task<List<PostagemViewModel>> ObterListaPostagemPorUsuarioIdAsync(int usuarioId)
+        public async Task DeleteAsync(int id)
         {
-            Usuario usuarioBanco = await _usuarioRepository.PegarId(usuarioId);
-            if (usuarioBanco is null)
+            var usuario = await _postagemRepository
+                         .ObterListaPostagemPorUsuarioIdAsync(id)
+                         .ConfigureAwait(false);
+            if (usuario is null)
             {
-                throw new ArgumentException("Usuário inválido");
+                throw new Exception("Sentimos muito, sua postagem não foi encontrada");
             }
 
-            List<Postagem> listaPostagem = await _postagemRepository
-                            .ObterListaPostagemPorUsuarioIdAsync(usuarioId)
-                          .ConfigureAwait(false);
-
-            if (listaPostagem is null)
-            {
-              throw new ArgumentException("Lista de postagens não encontrada!");
-            }
-
-           var listaPostagemMV = new List<PostagemViewModel>();
-
-           foreach (var postagem in listaPostagem)
-           {
-              
-            PostagemViewModel postagemMV = new PostagemViewModel()
-            {
-                Id = postagem.Id,
-                    UsuarioId = usuarioBanco.Id,
-                    NomeUsuario = usuarioBanco.Nome,
-                    Texto = postagem.Texto,
-                    Criacao = postagem.Criacao
-
-                };
-
-                listaPostagemMV.Add(postagemMV);
-            }
-
-            return listaPostagemMV;
-
-
+            await _postagemRepository
+              .DeleteAsync(id)
+              .ConfigureAwait(false);
         }
-    }
+
+        public async Task<Postagem> InserirtAsync(PostagemInput input)
+        {
+            var usuarioId = _logado.PegarLoginUsuarioId();
+
+            var postagem = new Postagem(input.Texto, usuarioId);
+
+
+            var id = await _postagemRepository
+                             .InserirAsync(postagem)
+                             .ConfigureAwait(false);
+
+            postagem.SetId(id);
+
+            return postagem;
+        }
+
+        public async Task<List<Postagem>> ObterListaPostagem()
+        {
+            var usuarioId = _logado.PegarLoginUsuarioId();
+
+            var postagem = await _postagemRepository
+                                   .ObterListaPostagem()
+                                    .ConfigureAwait(false);
+            return postagem;
+        }
+
+        public Task<List<Postagem>> PegarPostagemUsuarioIdAsync()
+        {
+            throw new NotImplementedException();
+        }
+    }  
 }

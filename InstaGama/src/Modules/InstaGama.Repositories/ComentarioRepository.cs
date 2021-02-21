@@ -18,6 +18,25 @@ namespace InstaGama.Repositories
             _configuracao = configuracao;
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            using (var con = new SqlConnection(_configuracao["ConnectionString"]))
+            {
+                var sqlCmd = $@"DELETE from Comentario  WHERE id = {id}";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+
+                    con.Open();
+                    await cmd
+                          .ExecuteScalarAsync()
+                          .ConfigureAwait(false);
+                }
+            }
+        }
+
         public async Task<int> InserirAsync(Comentario comentario)
         {
             using (var con = new SqlConnection(_configuracao["ConnectionString"]))
@@ -42,6 +61,41 @@ namespace InstaGama.Repositories
                     return int.Parse(id.ToString());
                 }
             }
+        }
+
+        public async Task<Comentario> PegarComentarioIdAsync(int id)
+        {
+            using (var con = new SqlConnection(_configuracao["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT * FROM
+	                                Comentario
+                                WHERE 
+	                                PostagemId= '{id}'";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    var reader = await cmd
+                                        .ExecuteReaderAsync()
+                                        .ConfigureAwait(false);
+
+
+                    while (reader.Read())
+                    {
+                        var comentario = new Comentario(int.Parse(reader["Id"].ToString()),
+                                                    int.Parse(reader["PostagemId"].ToString()),
+                                                    int.Parse(reader["UsuarioId"].ToString()),
+                                                    reader["Texto"].ToString(),
+                                                    DateTime.Parse(reader["Criacao"].ToString()));
+                        return comentario;
+                    }
+
+                    return default;
+                }
+            }
+
         }
 
         public async Task<List<Comentario>> PegarPostagemIdAsync(int postagemId)

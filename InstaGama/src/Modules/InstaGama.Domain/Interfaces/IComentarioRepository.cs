@@ -9,6 +9,8 @@ namespace InstaGama.Domain.Interfaces
 
         Task<int> InserirAsync(Comentario comentario);
         Task<List<Comentario>> PegarPostagemIdAsync(int postagemId);
+        Task DeleteAsync(int id);
+        Task<Comentario> PegarComentarioIdAsync(int id);
 
     }
 }

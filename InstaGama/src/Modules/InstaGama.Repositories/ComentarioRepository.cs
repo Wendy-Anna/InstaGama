@@ -36,15 +36,21 @@ namespace InstaGama.Repositories
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
                     cmd.CommandType = CommandType.Text;
-                    con.Open();
+                    cmd.Parameters.AddWithValue("UsuarioId", comentario.UsuarioId);
+                    cmd.Parameters.AddWithValue("PostagemId", comentario.PostagemId);
+                    cmd.Parameters.AddWithValue("Texto", comentario.Texto);
+                    cmd.Parameters.AddWithValue("Criacao", comentario.Criacao);
 
-                    var id = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+                    con.Open();
+                    var id = await cmd
+                                    .ExecuteScalarAsync()
+                                    .ConfigureAwait(false);
                     return int.Parse(id.ToString());
                 }
             }
         }
 
-        public async Task<List<Comentario>> PegarPostagemIdAsync(int postagemId)
+        public async Task<List<Comentario>> ObterListaComentarioPorPostagemIdAsync(int postagemId)
         {
             using (var con = new SqlConnection(_configuracao["ConnectionString"]))
             {
@@ -53,13 +59,14 @@ namespace InstaGama.Repositories
                                        PostagemId,
                                        Texto,
                                        Criacao
-                             FROM
-                                       Comentarios
-                             WHERE
+                                    FROM
+                                       COMENTARIO
+                                    WHERE
                                        PostagemId= '{postagemId}'";
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
                     cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("id", postagemId);
                     con.Open();
 
                     var cabecalho = await cmd
@@ -85,6 +92,35 @@ namespace InstaGama.Repositories
             }
 
         }
+
+
+        public async Task DeletarComentario(int id)
+        {
+
+            using (var con = new SqlConnection(_configuracao["ConnectionString"]))
+            {
+
+                var sqlCmd = $@"DELETE 
+                               FROM COMENTARIO
+                               WHERE id ='{id}'";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    con.Open();
+
+                    await cmd
+                        .ExecuteScalarAsync()
+                        .ConfigureAwait(false);
+
+                }
+
+
+            }
+            
+        }
+
+        
     }
 }
 

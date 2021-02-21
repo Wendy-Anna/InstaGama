@@ -51,5 +51,7 @@ namespace InstaGama.Api.Controllers
             return Ok(postagem);
         }
 
+               
+
     }
 }

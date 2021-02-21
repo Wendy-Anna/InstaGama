@@ -16,6 +16,7 @@ namespace InstaGama.Repositories.IoC.Repositories
             services.AddScoped<IAmigoRepository, AmigoRepository>();
             services.AddScoped<ICurtidaRepository, CurtidaRepository>();
             services.AddScoped<IPostagemRepository, PostagemRepository>();
+            services.AddScoped<IComentarioRepository, ComentarioRepository>();
         }
     }
 }

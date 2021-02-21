@@ -33,11 +33,11 @@ CREATE TABLE dbo.Postagem (
 	UsuarioId int NOT NULL, 
    CONSTRAINT PK_Postagem_Id PRIMARY KEY CLUSTERED (Id)
 )
-
+/*
 ALTER TABLE dbo.Postagem
    ADD CONSTRAINT FK_Postagem_Usuario FOREIGN KEY (UsuarioId)
       REFERENCES dbo.Usuario (Id)
-	  
+	*/  
 	  
 CREATE TABLE dbo.Comentario (
    Id int IDENTITY(1,1) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE dbo.Comentario (
    Criacao DateTime NOT NULL,
    CONSTRAINT PK_Comentario_Id PRIMARY KEY CLUSTERED (Id)
 )
-
+/*
 ALTER TABLE dbo.Comentario
    ADD CONSTRAINT FK_Comentario_Usuario FOREIGN KEY (UsuarioId)
       REFERENCES dbo.Usuario (Id)
@@ -55,14 +55,14 @@ ALTER TABLE dbo.Comentario
 ALTER TABLE dbo.Comentario
    ADD CONSTRAINT FK_Comentario_Postagem FOREIGN KEY (PostagemId)
       REFERENCES dbo.Postagem (Id)
-	  
-CREATE TABLE dbo.Curtidas (
+	*/  
+CREATE TABLE dbo.Curtida (
    Id int IDENTITY(1,1) NOT NULL,
    UsuarioId int NOT NULL,
    PostagemId int NOT NULL,
    CONSTRAINT PK_Curtidas_Id PRIMARY KEY CLUSTERED (Id)
 )
-
+/*
 ALTER TABLE dbo.Curtidas
    ADD CONSTRAINT FK_Curtidas_Usuario FOREIGN KEY (UsuarioId)
       REFERENCES dbo.Usuario (Id)
@@ -70,7 +70,7 @@ ALTER TABLE dbo.Curtidas
 ALTER TABLE dbo.Curtidas
    ADD CONSTRAINT FK_Curtidas_Postagem FOREIGN KEY (PostagemId)
       REFERENCES dbo.Postagem (Id);
-
+	  */
 CREATE TABLE dbo.Amigos(
 	Id int IDENTITY(1,1) NOT NULL,
 	UsuarioId int NOT NULL,

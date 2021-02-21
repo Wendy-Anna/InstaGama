@@ -10,7 +10,7 @@ namespace InstaGama.Domain.Entities
         {
             Texto = texto;
             UsuarioId = usuarioId;
-            Criacao = DateTime.Now;
+            //Criacao = DateTime.Now;
         }
 
         public Postagem(int id, string texto, DateTime criacao, int usuarioId)

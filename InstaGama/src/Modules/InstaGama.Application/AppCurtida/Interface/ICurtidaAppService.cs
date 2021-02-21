@@ -9,5 +9,7 @@ namespace InstaGama.Application.AppCurtida.Interface
        Task<CurtidaModelView> InserirAsync(CurtidaInput curtida); 
        
        Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId);
+
+       Task<CurtidaModelView> ObterPostagemPorIdAsync(int postagemId);
     }
 }

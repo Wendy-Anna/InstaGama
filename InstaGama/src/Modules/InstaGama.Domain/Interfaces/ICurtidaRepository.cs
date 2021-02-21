@@ -11,7 +11,8 @@ namespace InstaGama.Domain.Interfaces
         Task<int> InserirAsync(Curtida curtida);
         Task ApagarAsync(int id);
         Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId);
-        Task<Curtida> PegarUsuarioIdEPostagemIdAsync(int usuarioId, int postagemId);
+        
+        Task<Postagem> ObterPostagemPorIdAsync(int postagemId);
 
     }
 }

@@ -10,5 +10,7 @@ namespace InstaGama.Domain.Interfaces
     {
         Task<int> InserirAsync(Postagem postagem);
         Task<List<Postagem>> ObterListaPostagemPorUsuarioIdAsync(int usuarioId);
+        Task<Postagem> ObterPostagemPorIdAsync(int postagemId);
+
     }
 }

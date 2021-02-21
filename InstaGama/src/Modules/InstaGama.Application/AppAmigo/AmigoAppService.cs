@@ -73,13 +73,30 @@ namespace InstaGama.Application.AppAmigos
 
         public async Task<AmigoViewModel> InsertAsync(AmigoInput inputAmigo)
         {
-            
+
+            Usuario usuarioIn = await _usuarioRespository.PegarId(inputAmigo.UsuarioId);
+            if (usuarioIn is null)
+            {
+                throw new ArgumentException("Usuario não existe.");
+            }
+
+            Usuario usuarioAmigoIn = await _usuarioRespository.PegarId(inputAmigo.UsuarioAmigoId);
+            if (usuarioAmigoIn is null)
+            {
+                throw new ArgumentException("Usuario amigo não existe.");
+            }
+
+            if (inputAmigo.UsuarioId == inputAmigo.UsuarioAmigoId)
+            {
+                throw new ArgumentException("Não é possível vincular o mesmo Id.");
+            }
+
             var amigo = new Amigo(inputAmigo.UsuarioId,
                                   inputAmigo.UsuarioAmigoId);
 
             if (amigo is null)
             {
-                throw new ArgumentException("Amigo não encontrada.");
+                throw new ArgumentException("Vinculo de amizade não encontrada.");
             }
 
             var id = await _amigoRepository

@@ -1,110 +1,123 @@
 Sobre
 =========
-Título: Nome curto do projeto
+REST API COM .NET CORE  
+Descrição: API backend, para redes sociais.   Permite a interoperabilidade entre aplicações e entre os usuários.  
+Adotado princípios SOLID, que permitem legibilidade e grande manutenibilidade. 
 
-Descrição: API backend
 
 
 Índice
 =================
 
-<!--ts-->
+
    * [Status](#Status)
-    
-   * [Pré-Requisitos](#pre-requisito)
-      * [como rodar](#x)
-      * [xx ](#xx)
-      * [xxx](#xxx)
    * [Funcionalidades](#funcionalidades)
    * [Endpoints](#Endpoints)
    * [Tecnologias](#tecnologias)
-   * [Demonstração](#demonstração)
-   * [Licença](#licença)
-   * [Autores](#autores)
    * [Agradecimentos](#agradecimentos)
-   * [licença](#licenca)
-<!--te-->
+   * [Desenvolvedoras](#desenvolvedoras)
+   
 
 
 Status
 ============
-
-```bash
-Indica se o projeto está em desenvolvimento ou já foi concluído.
-
+```
+O Projeto está concluído.
 ```
 
-Pré-Requisitos
-=====
-como rodar
-intalaçoes necessarias para o usuario usar e testar a API, etc
-
-
-x
------
-
-```bash
-x
-```
-
-xx
------------
-
-```bash
-xx
-```
-
-xxx
------------
-
-
-```bash
-xxx
-```
 
 Funcionalidades
 =====
-
-exemplo
------
-
-```bash
-- [x] Cadastro de usuário
-- [x] Cadastro de cliente
-- [ ] Cadastro de produtos
 ```
-
-Demonstração
-=====
-
-```bash
-inserir link insominia- facilita para o usuário testar a API
+- [x] Cadastro de usuário
+- [x] Inserção de Postagem com texto/foto e/ou vídeo
+- [ ] Inserção  de comentário nas postagens
+- [ ] Inserção de curtida nas postagens
+- [ ] Algum com as Fotos do usuário
+- [ ] Linha do tempo com reunião das postagens
 ```
 
 Endpoints
 ==========
+Usuário
+```
+° POST /api/Usuario – Criar  usuário
+° GET /api/Usuario/{id} – Buscar usuário pelo ID
+° PUT /api/Usuario/{id}/alterar – Editar usuário
+° DELETE /api/Usuario/{id} – Excluir usuário
+```
 
-![resumo dos endpoints][1]
+Postagem
+```
+° POST /api/Postagem – Criar postagem
+° GET /api/Postagem {id}– Buscar Postagem pelo ID
+° PUT
+° DELETE
+```
 
-[1]: endpoints.png
+Amigo
+```
+° POST /api/Amigo – Criar amigo
+° GET /api/Amigo – Listar os amigos
+° GET /api/Amigos/{id} – Busca amigo pelo ID
+° DELETE /api/Amigo/{idUsuario}/{idVinculo} – Excluir um amigo
+```
 
+<!-- Comentário
+```
+° POST xxxxxxxxxxxxx – Criar Comentario
+° GET xxxxxxxxxxxxxxx 
+° PUT
+° DELETE
+``` -->
 
+Curtida
+```
+° GET /api/Curtida/{id} - Buscar curtida pelo ID 
+```
+
+Login
+```
+° POST /api/Login – Criar Login
+
+```
 
 Tecnologias
 ==========
-Ferramentas usadas na construção do projeto:
+Recursos tecnológicos usados na construção do projeto:
 
+- [.net](https://docs.microsoft.com/pt-br/dotnet/)
 
-Licença
-==========
-MIT ?  permite as pessoas baixem e modifiquem e sem responsabiliza autor por nada.
+- [Autênticação JWT](https://jwt.io/)
 
+- [Arquitetura REST](wikipedia.org/wiki/REST)
 
-Autoras
-==========
-nossa imagem, nome e link github
+- [Insominia](https://insomnia.rest/)
+
+- [Postman](https://www.postman.com/)
+
+- [SQL-Server ](https://www.microsoft.com/pt-br/sql-server/sql-server-2019)
+
+- [Visual-studio](https://visualstudio.microsoft.com/pt-br/)
 
 
 Agradecimentos
 ==========
-Gama e Professor Fernando
+- [Gama Academy](https://www.gama.academy/)
+
+- [Fernando Mendes](https://github.com/marraia)
+
+Desenvolvedoras
+==========
+<table>
+  <tr>
+    <td align="center"><a href="https://https://github.com/karolrobertax3"><sub><b>Karol Roberta Souza Batista</b></sub><br />
+    </td>
+    <td align="center"><a href="https://github.com/MarciaMartins"><sub><b>Márcia Pompeu Martins</b></sub><br />
+    </td>
+    <td align="center"><a href="https://github.com/Wendy-Annahttps://github.com/RRRAMOS"><sub><b>Raquel Rodrigues Ramos</b></sub><br />
+    </td>  
+    <td align="center"><a href="https://github.com/Wendy-Anna"><sub><b>Wendy-Anna Albuquerque Lopes</b></sub><br />
+    </td>
+   </tr>
+</table>

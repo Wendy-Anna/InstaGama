@@ -1,11 +1,8 @@
 ﻿using InstaGama.Application.UsuarioApp.Input;
 using InstaGama.Application.UsuarioApp.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace InstaGama.Api.Controllers
@@ -40,7 +37,7 @@ namespace InstaGama.Api.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize()]
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
@@ -53,7 +50,36 @@ namespace InstaGama.Api.Controllers
                 return NotFound();
 
             return Ok(usuario);
-        } 
+        }
+
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("{id}/alterar")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UsuarioInput usuarioInput)
+        {
+            try
+            {
+                var usuario = await _usuarioAppService.UpdateUsuario(usuarioInput, id).ConfigureAwait(false);
+
+                return Ok(usuario);
+            }
+            catch (ArgumentException arg)
+            {
+                return BadRequest(arg.Message);
+            }
+        }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            await _usuarioAppService
+                                    .DeleteUsuario(id)
+                                    .ConfigureAwait(false);
+
+            return NoContent();
+        }
 
     } 
 }

@@ -77,5 +77,14 @@ namespace InstaGama.Domain.Entities
         {
             Id = id;
         }
+
+        public void SetNome(string nome)
+        {
+            Nome = nome;
+        }
+        public void SetEmail(string email)
+        {
+            Email = email;
+        }
     }
 }

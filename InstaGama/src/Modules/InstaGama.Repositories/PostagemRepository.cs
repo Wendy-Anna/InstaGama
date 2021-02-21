@@ -20,7 +20,7 @@ namespace InstaGama.Repositories
 
         }
 
-       
+
         public async Task<int> InserirAsync(Postagem postagem)
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
@@ -40,7 +40,7 @@ namespace InstaGama.Repositories
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.Parameters.AddWithValue("texto", postagem.Texto);
                     cmd.Parameters.AddWithValue("usuarioId", postagem.UsuarioId);
-                    cmd.Parameters.AddWithValue("criacao", postagem.Criacao);
+                    cmd.Parameters.AddWithValue("criacao", DateTime.Now);
 
                     con.Open();
 
@@ -54,16 +54,13 @@ namespace InstaGama.Repositories
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
-                var sqlCmd = @$"SELECT p.UsuarioId, u.nome, p.texto, p.criacao 
+                var sqlCmd = @$"SELECT p.Id, p.UsuarioId, p.texto, p.criacao 
                                    FROM POSTAGEM p
-                                   INNER JOIN USUARIO u
-                                   ON p.UsuarioId = u.Id
                                    WHERE p.UsuarioId='{usuarioId}';";
 
 
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
-
                     cmd.CommandType = CommandType.Text;
 
                     con.Open();
@@ -88,5 +85,41 @@ namespace InstaGama.Repositories
             }
         }
 
+        public async Task<Postagem> ObterPostagemPorIdAsync(int postagemId)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"SELECT p.Id, p.UsuarioId, p.texto, p.criacao 
+                                   FROM POSTAGEM p
+                                   WHERE p.Id = '{postagemId}';";
+
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+
+                    cmd.CommandType = CommandType.Text;
+
+
+                    con.Open();
+                    var reader = await cmd
+                                    .ExecuteReaderAsync()
+                                    .ConfigureAwait(false);
+
+                    while (reader.Read())
+                    {
+                        var postagem = new Postagem(int.Parse(reader["Id"].ToString()),
+                                         reader["Texto"].ToString(),
+                                         DateTime.Parse(reader["Criacao"].ToString()),
+                                         int.Parse(reader["UsuarioId"].ToString()));
+
+                        return postagem;
+                    }
+                    return default;
+                }
+
+            }
+        }
+
+      
     }
 }

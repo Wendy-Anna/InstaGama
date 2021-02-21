@@ -5,9 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\NovaPasta1\**" />
+    <Compile Remove="Core\NovaPasta2\**" />
+    <EmbeddedResource Remove="Core\NovaPasta1\**" />
+    <EmbeddedResource Remove="Core\NovaPasta2\**" />
+    <None Remove="Core\NovaPasta1\**" />
+    <None Remove="Core\NovaPasta2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Core\ILogged.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
 </Project>

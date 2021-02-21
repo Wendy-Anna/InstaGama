@@ -1,6 +1,9 @@
-﻿using InstaGama.Application.AppCurtida.Interface;
+﻿using InstaGama.Application.AppCurtida.Input;
+using InstaGama.Application.AppCurtida.Interface;
+using InstaGama.Application.AppCurtida.Output;
 using InstaGama.Domain.Entities;
 using InstaGama.Domain.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace InstaGama.Application.AppPostage
@@ -21,6 +24,40 @@ namespace InstaGama.Application.AppPostage
             // _logado = logadoRepository;
         }
 
+        public async Task<CurtidaModelView> InserirAsync(CurtidaInput curtidaInput)
+        {
+            var postagem = await _curtidaRepository
+                                      .ObterPostagemPorIdAsync(curtidaInput.PostagemId)
+                                      .ConfigureAwait(false);
+            if (postagem is null)
+            {
+                throw new ArgumentException("Postagem inexistente.");
+            }
+
+            //if (Curtida.IsValid())
+            //{
+
+            //}
+            var curtida = new Curtida(curtidaInput.UsuarioId, curtidaInput.PostagemId);
+
+            var idCurtida = await _curtidaRepository
+                                .InserirAsync(curtida)
+                                .ConfigureAwait(false);
+
+            if(idCurtida == 0)
+            {
+                throw new ArgumentException("Postagem inexistente.");
+            }
+
+            return new CurtidaModelView()
+            {
+                Id = idCurtida,
+                PostagemId = curtida.PostagemId,
+                UsuarioId = curtida.UsuarioId,
+            };
+        }
+
+        
         public async Task<int> PegarQuantidadeCurtidasIdAsync(int postagemId)
         {
             return await _curtidaRepository
@@ -28,29 +65,10 @@ namespace InstaGama.Application.AppPostage
                             .ConfigureAwait(false);
         }
 
-        public async Task InserirAsync(int postagemId)
+        public Task<CurtidaModelView> ObterPostagemPorIdAsync(int postagemId)
         {
-            var usuarioId = 1; //_logado.PegarUsuarioLogadoId(); o NUMERO 1 PRECISA SER RETIRADO E DESCPMENTAR O LOGADO
-
-            var curtidaExistForPostagem = await _curtidaRepository
-                                                .PegarUsuarioIdEPostagemIdAsync(usuarioId, postagemId)
-                                                .ConfigureAwait(false);
-            if (curtidaExistForPostagem != null)
-            {
-                await _curtidaRepository
-                         .ApagarAsync(curtidaExistForPostagem.Id)
-                         .ConfigureAwait(false);
-            }
-
-            var curtida = new Curtida(postagemId, usuarioId);
-           
-
-            await _curtidaRepository
-                    .InserirAsync(curtida)
-                    .ConfigureAwait(false);
+            throw new NotImplementedException();
         }
-
-
 
     }
 }

@@ -142,6 +142,49 @@ namespace InstaGama.Repositories
             }
         }
 
+        public async Task AlterarUsuario(Usuario usuario)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @"UPDATE Usuario 
+                                   SET Nome = @nome, Email = @email
+                                   WHERE id = @id; SELECT scope_identity();";
 
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+
+                    cmd.Parameters.AddWithValue("id", usuario.Id);
+                    cmd.Parameters.AddWithValue("nome", usuario.Nome);
+                    cmd.Parameters.AddWithValue("email", usuario.Email);
+    
+                    con.Open();
+                    await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+                }
+
+               
+
+            }
+        }
+
+        public async Task DeleteUsuario(int id)
+        {
+            using (var con = new SqlConnection(_configuration["ConnectionString"]))
+            {
+                var sqlCmd = @$"DELETE FROM Curtida WHERE UsuarioId = '{id}'; 
+                                DELETE FROM Comentario WHERE UsuarioId = '{id}';
+                                DELETE FROM Postagem WHERE UsuarioId = '{id}';
+                                DELETE FROM Usuario WHERE id = '{id}';SELECT scope_identity();";
+
+                using (var cmd = new SqlCommand(sqlCmd, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    con.Open();
+                    await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+                }
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace InstaGama.Api
                         Description = "Api das meninas da Gama,  Grupo 04",
                         Contact = new OpenApiContact
                         {
-                            Name = "Wendy-Anna",
+                            Name = "Projetado pela equipe: Karol, Márcia, Raquel e Wendy-Anna",
                             Url = new Uri("https://github.com/Wendy-Anna/InstaGama")
                         }
                     });

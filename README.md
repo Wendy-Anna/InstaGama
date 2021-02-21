@@ -16,8 +16,9 @@ Descrição: API backend
       * [xx ](#xx)
       * [xxx](#xxx)
    * [Funcionalidades](#funcionalidades)
+   * [Endpoints](#Endpoints)
    * [Tecnologias](#tecnologias)
-   * [Demonstração](#)
+   * [Demonstração](#demonstração)
    * [Licença](#licença)
    * [Autores](#autores)
    * [Agradecimentos](#agradecimentos)
@@ -76,11 +77,18 @@ exemplo
 Demonstração
 =====
 
------
-
 ```bash
 inserir link insominia- facilita para o usuário testar a API
 ```
+
+Endpoints
+==========
+
+![resumo dos endpoints][1]
+
+[1]: endpoints.png
+
+
 
 Tecnologias
 ==========

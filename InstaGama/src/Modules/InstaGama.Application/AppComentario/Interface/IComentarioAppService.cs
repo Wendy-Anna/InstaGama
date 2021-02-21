@@ -15,6 +15,7 @@ namespace InstaGama.Application.AppComentario.Interface
 
         Task DeletarComentario(int id);
 
+    
 
     }
 }

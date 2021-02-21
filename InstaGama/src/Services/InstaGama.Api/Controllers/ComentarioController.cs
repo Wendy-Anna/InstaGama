@@ -49,7 +49,6 @@ namespace InstaGama.Api.Controllers
         }
 
 
-
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)

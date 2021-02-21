@@ -10,6 +10,7 @@ namespace InstaGama.Domain.Interfaces
         Task<List<Comentario>> ObterListaComentarioPorPostagemIdAsync(int postagemId);
 
         Task DeletarComentario(int idComentario);
+        
 
     }
 }

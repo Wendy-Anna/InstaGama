@@ -25,5 +25,10 @@ namespace InstaGama.Domain.Entities
         public int Id { get; private set; }
         public int PostagemId { get; private set; }
         public int UsuarioId { get; private set; }
+
+        //public static bool IsValid()
+        //{
+            //return !(PostagemId <1) && !(UsuarioId is null);
+        //}
     }
 }

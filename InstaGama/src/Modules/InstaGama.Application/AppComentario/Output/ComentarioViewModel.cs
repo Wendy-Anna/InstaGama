@@ -6,14 +6,13 @@ namespace InstaGama.Application.AppComentario.Output
 {
     public class ComentarioViewModel
     {
-        public int Id { get; set; }
-        public int PostagemId { get; set; }
-        public String TextoPostagemId { get; set; }
+        public int IdComentario { get; set; }
+        public int IdPostagem { get; set; }
+        public String Comentario { get; set; }
         public int UsuarioId { get; set; }
 
         public string NomeUsuario { get; set; }
 
-        public string Texto { get; set; }
         public DateTime Criacao { get; set; }
 
     }

@@ -54,7 +54,7 @@ namespace InstaGama.Repositories
         {
             using (var con = new SqlConnection(_configuration["ConnectionString"]))
             {
-                var sqlCmd = @$"SELECT  p.Id, p.UsuarioId, p.texto, p.criacao 
+                var sqlCmd = @$"SELECT p.Id, p.UsuarioId, p.texto, p.criacao 
                                    FROM POSTAGEM p
                                    WHERE p.UsuarioId='{usuarioId}';";
 
@@ -96,21 +96,25 @@ namespace InstaGama.Repositories
 
                 using (var cmd = new SqlCommand(sqlCmd, con))
                 {
+
                     cmd.CommandType = CommandType.Text;
+
 
                     con.Open();
                     var reader = await cmd
                                     .ExecuteReaderAsync()
                                     .ConfigureAwait(false);
 
-                    return new Postagem(int.Parse(reader["Id"].ToString()),
+                    while (reader.Read())
+                    {
+                        var postagem = new Postagem(int.Parse(reader["Id"].ToString()),
                                          reader["Texto"].ToString(),
                                          DateTime.Parse(reader["Criacao"].ToString()),
                                          int.Parse(reader["UsuarioId"].ToString()));
 
-
-
-
+                        return postagem;
+                    }
+                    return default;
                 }
 
             }

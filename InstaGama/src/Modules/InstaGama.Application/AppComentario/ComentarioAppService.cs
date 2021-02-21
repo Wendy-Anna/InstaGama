@@ -28,7 +28,16 @@ namespace InstaGama.Application.AppComentario
         
         public async Task<ComentarioViewModel> InserirAsync(ComentarioInput comentarioInput)
         {
-            
+
+            var postagemIn = await _postagemRepository
+                           .ObterPostagemPorIdAsync(comentarioInput.PostagemId)
+                           .ConfigureAwait(false);
+
+            if (postagemIn is null)
+            {
+                throw new ArgumentException("Postagem não encontrada.");
+
+            }
             var comentario = new Comentario(comentarioInput.PostagemId,
                                                 comentarioInput.UsuarioId,
                                                 comentarioInput.Texto);
@@ -44,13 +53,13 @@ namespace InstaGama.Application.AppComentario
                 throw new ArgumentException("Usuario não encontrado.");
             }
 
-            /*var postagem = await _postagemRepository
+            var postagem = await _postagemRepository
                                     .ObterListaPostagemPorUsuarioIdAsync(comentario.UsuarioId)
                                     .ConfigureAwait(false);
             if (postagem is null)
             {
                 throw new ArgumentException("Postagem não encontrada.");
-            }*/
+            }
 
             var id = await _comentarioRepository
                                 .InserirAsync(comentario)
@@ -59,11 +68,11 @@ namespace InstaGama.Application.AppComentario
 
             return new ComentarioViewModel()
             {
-                Id = id,
-                PostagemId = comentario.PostagemId,
+                IdComentario = id,
+                IdPostagem = comentario.PostagemId,
                 UsuarioId = comentario.UsuarioId,
                 NomeUsuario = usuario.Nome,
-                Texto = comentario.Texto,
+                Comentario = comentario.Texto,
                 Criacao = comentario.Criacao
             };
         }
@@ -76,7 +85,7 @@ namespace InstaGama.Application.AppComentario
 
             if (postagem is null)
             {
-                throw new ArgumentException("Postagens não encontrada!");
+                throw new ArgumentException("Postagem(ns) não encontrada(s)!");
             }
 
             List<Comentario> listaComentarios = await _comentarioRepository
@@ -94,16 +103,14 @@ namespace InstaGama.Application.AppComentario
             foreach (var comentario in listaComentarios)
             {
                 Usuario usuario = await _usuarioRespository.PegarId(postagem.UsuarioId);
-
-
-
+                
                 ComentarioViewModel postagemMV = new ComentarioViewModel()
                 {
-                    Id = comentario.Id,
-                    PostagemId = comentario.PostagemId,
+                    IdComentario = comentario.Id,
+                    IdPostagem = comentario.PostagemId,
                     UsuarioId = comentario.UsuarioId,
                     NomeUsuario = usuario.Nome,
-                    Texto = comentario.Texto,
+                    Comentario = comentario.Texto,
                     Criacao = comentario.Criacao
 
                 };
@@ -121,6 +128,8 @@ namespace InstaGama.Application.AppComentario
                     .DeletarComentario(id)
                     .ConfigureAwait(false);
         }
+
+       
     }
 
 }

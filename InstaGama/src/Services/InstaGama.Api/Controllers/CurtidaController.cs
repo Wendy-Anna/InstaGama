@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InstaGama.Application.AppCurtida.Input;
 using InstaGama.Application.AppCurtida.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace InstaGama.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{idPostagem}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var qtdCurtidas = await _curtidaAppService
@@ -32,6 +33,23 @@ namespace InstaGama.Api.Controllers
                 return NotFound();
             }
             return Ok(qtdCurtidas);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InserirAsyncPost([FromBody] CurtidaInput curtidaInput)
+        {
+            try
+            {
+                var curtida = await _curtidaAppService
+                                    .InserirAsync(curtidaInput)
+                                    .ConfigureAwait(false);
+
+                return Created("", curtida);
+            }
+            catch (ArgumentException arg)
+            {
+                return BadRequest(arg.Message);
+            }
         }
 
     }

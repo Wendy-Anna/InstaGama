@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace InstaGama.Application.AppComentario.Interface
 {
-    class IComentarioAppService
+    public interface IComentarioAppService
     {
-        
+        Task<ComentarioViewModel> InserirAsync(ComentarioInput comentarioInput);
+        Task<List<ComentarioViewModel>> ObterListaComentarioPorPostagemIdAsync(int postagemId);
+
+        Task DeletarComentario(int id);
+
 
     }
 }

@@ -37,23 +37,16 @@ namespace InstaGama.Domain.Entities
             Id = id;
         }
 
-        public string ValidaTexto(string texto)
+        public bool IsValid()
         {
-
-            if (texto.Length >= 10 && texto.Length <= 300)
+            if (Texto is null)
             {
-
-                return texto;
-
+                return false;
             }
-
-            else
-            {
-                return ("Capriche num texto de 10 a 300 caracteres");
-            }
-
-
+            else return true;
         }
+
+
 
 
     }

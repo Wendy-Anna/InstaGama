@@ -21,6 +21,7 @@ namespace InstaGama.Application.AppPostagem
             _postagemRepository = postagemRepository;
         }
 
+        
         public async Task<PostagemViewModel> InserirAsync(PostagemInput postagemInput)
         {
             
@@ -53,16 +54,11 @@ namespace InstaGama.Application.AppPostagem
 
         }
 
-        public async Task<List<PostagemViewModel>> ObterListaPostagemPorUsuarioIdAsync(int usuarioId)
+        public async Task<List<PostagemViewModel>> ObterListaPostagemPorUsuarioIdAsync(int postagemId)
         {
-            Usuario usuarioBanco = await _usuarioRepository.PegarId(usuarioId);
-            if (usuarioBanco is null)
-            {
-                throw new ArgumentException("Usuário inválido");
-            }
-
+            
             List<Postagem> listaPostagem = await _postagemRepository
-                            .ObterListaPostagemPorUsuarioIdAsync(usuarioId)
+                            .ObterListaPostagemPorUsuarioIdAsync(postagemId)
                           .ConfigureAwait(false);
 
             if (listaPostagem is null)
@@ -70,27 +66,54 @@ namespace InstaGama.Application.AppPostagem
               throw new ArgumentException("Lista de postagens não encontrada!");
             }
 
+
+
            var listaPostagemMV = new List<PostagemViewModel>();
 
            foreach (var postagem in listaPostagem)
            {
-              
-            PostagemViewModel postagemMV = new PostagemViewModel()
-            {
-                Id = postagem.Id,
-                    UsuarioId = usuarioBanco.Id,
-                    NomeUsuario = usuarioBanco.Nome,
-                    Texto = postagem.Texto,
-                    Criacao = postagem.Criacao
+                Usuario usuarioBanco = await _usuarioRepository.PegarId(postagem.UsuarioId);
+                
+                PostagemViewModel postagemMV = new PostagemViewModel()
+                {
+                        Id = postagem.Id,
+                        UsuarioId = usuarioBanco.Id,
+                        NomeUsuario = usuarioBanco.Nome,
+                        Texto = postagem.Texto,
+                        Criacao = postagem.Criacao
 
-                };
+                 };
 
-                listaPostagemMV.Add(postagemMV);
+                 listaPostagemMV.Add(postagemMV);
             }
 
             return listaPostagemMV;
-
-
         }
+
+
+
+        public async Task<PostagemViewModel> ObterPostagemPorIdAsync(int postagemId)
+        {
+            Postagem postagem = await _postagemRepository
+                            .ObterPostagemPorIdAsync(postagemId)
+                          .ConfigureAwait(false);
+
+            if (postagem is null)
+            {
+                throw new ArgumentException("Lista de postagens não encontrada!");
+            }
+
+            Usuario usuarioBanco = await _usuarioRepository.PegarId(postagem.UsuarioId);
+
+            return new PostagemViewModel()
+            {
+                Id = postagem.Id,
+                UsuarioId = usuarioBanco.Id,
+                NomeUsuario = usuarioBanco.Nome,
+                Texto = postagem.Texto,
+                Criacao = postagem.Criacao
+
+            };
+        }    
     }
 }

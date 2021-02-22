@@ -1,7 +1,7 @@
 Sobre
 =========
 REST API COM .NET CORE  
-Descrição: API backend, para redes sociais.   Permite a interoperabilidade entre aplicações e entre os usuários.  
+Descrição: API backend, para redes sociais.   Permite a interoperabilidade entre a aplicação e os usuários.    
 Adotado princípios SOLID, que permitem legibilidade e grande manutenibilidade. 
 
 
@@ -31,10 +31,9 @@ Funcionalidades
 ```
 - [x] Cadastro de usuário
 - [x] Inserção de Postagem com texto/foto e/ou vídeo
-- [ ] Inserção  de comentário nas postagens
-- [ ] Inserção de curtida nas postagens
-- [ ] Algum com as Fotos do usuário
-- [ ] Linha do tempo com reunião das postagens
+- [x] Inserção  de comentário nas postagens
+- [x] Inserção de curtida nas postagens
+- [x] Linha do tempo com reunião das postagens
 ```
 
 Endpoints
@@ -51,8 +50,6 @@ Postagem
 ```
 ° POST /api/Postagem – Criar postagem
 ° GET /api/Postagem {id}– Buscar Postagem pelo ID
-° PUT
-° DELETE
 ```
 
 Amigo
@@ -65,28 +62,28 @@ Amigo
 
 <!-- Comentário
 ```
-° POST xxxxxxxxxxxxx – Criar Comentario
-° GET xxxxxxxxxxxxxxx 
-° PUT
-° DELETE
+° POST /api/Comentario – Adicionar Comentario a postagem
+° GET /api/Comentario/{idPostagem} - Listar Postagens realizadas
+° DELETE /api/Comentario/{id} - Excluir comentario
 ``` -->
 
 Curtida
 ```
+° POST /api/Curtida/ - Adicionar curtida a postagem
 ° GET /api/Curtida/{id} - Buscar curtida pelo ID 
 ```
 
 Login
 ```
 ° POST /api/Login – Criar Login
-
 ```
+
 
 Tecnologias
 ==========
 Recursos tecnológicos usados na construção do projeto:
 
-- [.net](https://docs.microsoft.com/pt-br/dotnet/)
+- [.NET](https://docs.microsoft.com/pt-br/dotnet/)
 
 - [Autênticação JWT](https://jwt.io/)
 

@@ -1,8 +1,19 @@
+<p align="center">	
+	<h1 align="center"> ✨InstaGama✨ </h1>
+</p>
+
+---
+
+
 Sobre
 =========
 REST API COM .NET CORE  
-Descrição: API backend, para redes sociais.   Permite a interoperabilidade entre a aplicação e os usuários.    
-Adotado princípios SOLID, que permitem legibilidade e grande manutenibilidade. 
+Descrição:  
+Desafio final solicitado pela Gama Academy como parte do processo para obtenção do certificado.
+Era necessário o desenvolvimento de uma API backend em .NET. 
+O projeto final era uma redes sociais, onde os usuários poderiam logar, criar postagem, comentar e curtir na mesma.   
+Esse projeto foi pensado para permitir a interoperabilidade entre a aplicação e os usuários. Adotado princípios SOLID, que permitem legibilidade e grande manutenibilidade. 
+  
 
 
 
@@ -93,9 +104,9 @@ Recursos tecnológicos usados na construção do projeto:
 
 - [Postman](https://www.postman.com/)
 
-- [SQL-Server ](https://www.microsoft.com/pt-br/sql-server/sql-server-2019)
+- [SQL Server ](https://www.microsoft.com/pt-br/sql-server/sql-server-2019)
 
-- [Visual-studio](https://visualstudio.microsoft.com/pt-br/)
+- [Visual studio](https://visualstudio.microsoft.com/pt-br/)
 
 
 Agradecimentos
